@@ -328,6 +328,28 @@ body {
 /* ── AFRICA BANNER ── */
 .africa-banner { background:linear-gradient(135deg,rgba(58,123,213,0.08),rgba(201,150,58,0.05)); border:1px solid rgba(58,123,213,0.2); border-radius:12px; padding:1rem 1.1rem; margin-bottom:1rem; display:flex; gap:0.85rem; align-items:flex-start; cursor:pointer; transition:all 0.2s; }
 .africa-banner:hover { border-color:var(--blue); }
+
+/* ── ARI AI CHAT ── */
+#panel-ari { padding: 1rem 1.1rem 6rem; }
+.ari-header { text-align:center; padding: 0.5rem 0 1.5rem; border-bottom: 1px solid var(--cream-dark); margin-bottom: 1rem; }
+.ari-eyebrow { font-family:'Cinzel',serif; font-size:0.6rem; color:var(--gold); letter-spacing:0.4em; margin-bottom:0.3rem; }
+.ari-title { font-family:'Cinzel',serif; font-size: 1.5rem; color: var(--blue); letter-spacing:0.1em; }
+.ari-sub { font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--brown-soft); font-style:italic; margin-top:0.3rem; }
+.ari-quick { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom: 1rem; }
+.ari-quick-btn { background:var(--white); border:1px solid var(--cream-dark); color:var(--brown-mid); padding:0.5rem 0.85rem; border-radius:20px; font-size:0.75rem; cursor:pointer; font-family:'Lato',sans-serif; transition:all 0.2s; }
+.ari-quick-btn:hover { background:var(--blue-light); border-color:var(--blue); color:var(--blue); }
+#ari-messages { min-height: 200px; max-height: 60vh; overflow-y: auto; background: var(--white); border-radius: 14px; padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--cream-dark); }
+.ari-msg { display: flex; margin-bottom: 0.75rem; gap: 8px; }
+.ari-user { justify-content: flex-end; }
+.ari-bot { justify-content: flex-start; }
+.ari-avatar { font-size:1.2rem; width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--gold-pale),var(--gold-light)); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+.ari-bubble-bot { background: var(--cream); padding: 0.75rem 1rem; border-radius: 14px 14px 14px 4px; max-width: 85%; font-size: 0.95rem; line-height: 1.5; color: var(--brown); }
+.ari-bubble-user { background: linear-gradient(135deg,var(--blue),var(--blue-mid)); color:#fff; padding: 0.75rem 1rem; border-radius: 14px 14px 4px 14px; max-width: 80%; font-size: 0.95rem; line-height: 1.5; }
+.ari-input-row { display:flex; gap: 0.5rem; background:var(--white); border-radius:14px; padding:0.5rem; border:1px solid var(--cream-dark); }
+#ari-input { flex: 1; border: none; outline: none; background: transparent; padding: 0.6rem 0.75rem; font-size: 0.95rem; font-family: 'Lato',sans-serif; color: var(--brown); }
+.ari-send-btn { background:linear-gradient(135deg,var(--gold),var(--amber)); color:#fff; border:none; padding:0.6rem 1.2rem; border-radius:10px; cursor:pointer; font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.1em; }
+.ari-welcome { text-align:center; padding: 1.5rem 1rem; color: var(--brown-soft); font-family:'Cormorant Garamond',serif; font-style:italic; }
+
 </style>
 </head>
 <body>
@@ -406,6 +428,7 @@ body {
     <button class="tab" onclick="showPanel('scrolls')" id="tab-scrolls">📜 HIDDEN SCROLLS</button>
     <button class="tab" onclick="showPanel('concordance')" id="tab-concordance">🔍 CONCORDANCE</button>
     <button class="tab" onclick="showPanel('journal')" id="tab-journal">✍️ JOURNAL</button>
+    <button class="tab" onclick="showPanel('ari')" id="tab-ari">🦁 ASK ARI</button>
     <button class="tab" onclick="showPanel('versions')" id="tab-versions">📚 VERSIONS</button>
     <button class="tab" onclick="showPanel('tracker')" id="tab-tracker">📊 TRACKER</button>
     <button class="tab" onclick="showPanel('pro')" id="tab-pro">👑 GO PRO</button>
@@ -756,6 +779,34 @@ body {
       <div class="setting-row"><span class="setting-label">OFFLINE MODE</span><button class="toggle off" id="offline-toggle" onclick="toggleSetting('offline-toggle')"></button></div>
       <div class="setting-row" style="cursor:pointer;" onclick="showThemeSelector()"><span class="setting-label">CHANGE THEME</span><span class="setting-val">Tap to change →</span></div>
     </div>
+  <!-- ARI AI PANEL -->
+  <div class="panel" id="panel-ari">
+    <div class="ari-header">
+      <div class="ari-eyebrow">YOUR AI COMPANION</div>
+      <div class="ari-title">🦁 ARI</div>
+      <div class="ari-sub">Lion of God · Your Bible Study Companion</div>
+    </div>
+    
+    <div class="ari-quick">
+      <button class="ari-quick-btn" onclick="askAriQuick('Give me today\'s devotional')">✨ Today's Devotional</button>
+      <button class="ari-quick-btn" onclick="askAriQuick('Write a short prayer for peace')">🙏 Prayer for Peace</button>
+      <button class="ari-quick-btn" onclick="askAriQuick('Give me a Bible trivia question')">🧠 Bible Trivia</button>
+      <button class="ari-quick-btn" onclick="askAriQuick('Explain John 3:16 in context')">📖 Explain a Verse</button>
+    </div>
+    
+    <div id="ari-messages">
+      <div class="ari-welcome">
+        Hi — I'm Ari, your AI companion for The Word.<br>
+        Ask me anything about the Bible, faith, or the verses you're reading.
+      </div>
+    </div>
+    
+    <div class="ari-input-row">
+      <input type="text" id="ari-input" placeholder="Ask Ari anything…" onkeydown="askAriOnEnter(event)">
+      <button class="ari-send-btn" onclick="askAri()">ASK</button>
+    </div>
+  </div>
+
 
   </main>
 
@@ -766,6 +817,7 @@ body {
     <button class="bnav-item" onclick="showPanel('audio')" id="bnav-audio"><span class="bnav-icon">🎧</span><span class="bnav-lbl">AUDIO</span></button>
     <button class="bnav-item" onclick="showPanel('concordance')" id="bnav-concordance"><span class="bnav-icon">🔍</span><span class="bnav-lbl">CONCORDANCE</span></button>
     <button class="bnav-item" onclick="showPanel('journal')" id="bnav-journal"><span class="bnav-icon">✍️</span><span class="bnav-lbl">JOURNAL</span></button>
+    <button class="bnav-item" onclick="showPanel('ari')" id="bnav-ari"><span class="bnav-icon">🦁</span><span class="bnav-lbl">ARI</span></button>
     <button class="bnav-item" onclick="showPanel('pro')" id="bnav-pro"><span class="bnav-icon">👑</span><span class="bnav-lbl">PRO</span></button>
   </nav>
 
@@ -791,18 +843,41 @@ body {
 <script>
 // ── DATA ──
 const standardBooks = [
-  {icon:'🌅',name:'Genesis',meta:'The beginning of all things',tag:'Old Testament'},
-  {icon:'🕊️',name:'Exodus',meta:'The liberation of God\'s people',tag:'Old Testament'},
-  {icon:'⚖️',name:'Leviticus',meta:'The law and holiness of God',tag:'Old Testament'},
-  {icon:'🗺️',name:'Numbers',meta:'The wilderness journey',tag:'Old Testament'},
-  {icon:'📜',name:'Deuteronomy',meta:'Moses\' final words to Israel',tag:'Old Testament'},
-  {icon:'🎵',name:'Psalms',meta:'Songs of worship and prayer',tag:'Poetry & Wisdom'},
-  {icon:'💡',name:'Proverbs',meta:'Wisdom for daily living',tag:'Wisdom'},
-  {icon:'✝️',name:'Matthew',meta:'The life of Jesus Christ',tag:'Gospel'},
-  {icon:'❤️',name:'John',meta:'In the beginning was the Word…',tag:'Gospel'},
-  {icon:'⚡',name:'Romans',meta:'The righteousness of God revealed',tag:'Epistle'},
-  {icon:'🛡️',name:'Ephesians',meta:'The armor of God',tag:'Epistle'},
-  {icon:'🔮',name:'Revelation',meta:'The unveiling of what is to come',tag:'Prophecy'},
+  {icon:'🌅',name:'Genesis',meta:'The beginning of all things',tag:'Old Testament',api:'genesis 1'},
+  {icon:'🕊️',name:'Exodus',meta:"The liberation of God's people",tag:'Old Testament',api:'exodus 1'},
+  {icon:'⚖️',name:'Leviticus',meta:'The law and holiness of God',tag:'Old Testament',api:'leviticus 1'},
+  {icon:'🗺️',name:'Numbers',meta:'The wilderness journey',tag:'Old Testament',api:'numbers 1'},
+  {icon:'📜',name:'Deuteronomy',meta:"Moses' final words",tag:'Old Testament',api:'deuteronomy 1'},
+  {icon:'🛡️',name:'Joshua',meta:'Entering the Promised Land',tag:'Old Testament',api:'joshua 1'},
+  {icon:'⚔️',name:'Judges',meta:'Heroes raised by God',tag:'Old Testament',api:'judges 1'},
+  {icon:'🌾',name:'Ruth',meta:'A story of redemption',tag:'Old Testament',api:'ruth 1'},
+  {icon:'👑',name:'1 Samuel',meta:'Israel demands a king',tag:'Old Testament',api:'1 samuel 1'},
+  {icon:'🏰',name:'2 Samuel',meta:"David's reign",tag:'Old Testament',api:'2 samuel 1'},
+  {icon:'🏛️',name:'1 Kings',meta:'The temple of Solomon',tag:'Old Testament',api:'1 kings 1'},
+  {icon:'🔥',name:'2 Kings',meta:'Elijah and Elisha',tag:'Old Testament',api:'2 kings 1'},
+  {icon:'🎵',name:'Psalms',meta:'The Lord is my shepherd…',tag:'Poetry & Wisdom',api:'psalm 23'},
+  {icon:'💡',name:'Proverbs',meta:'Wisdom for daily living',tag:'Wisdom',api:'proverbs 1'},
+  {icon:'🌿',name:'Ecclesiastes',meta:'The meaning of life',tag:'Wisdom',api:'ecclesiastes 1'},
+  {icon:'🌹',name:'Song of Solomon',meta:'A love song',tag:'Poetry',api:'song of solomon 1'},
+  {icon:'👁️',name:'Isaiah',meta:'Prophecies of the Messiah',tag:'Prophecy',api:'isaiah 53'},
+  {icon:'💧',name:'Jeremiah',meta:'The weeping prophet',tag:'Prophecy',api:'jeremiah 1'},
+  {icon:'🦁',name:'Daniel',meta:'Faith in exile',tag:'Prophecy',api:'daniel 1'},
+  {icon:'✝️',name:'Matthew',meta:'The life of Jesus',tag:'Gospel',api:'matthew 1'},
+  {icon:'🕊️',name:'Mark',meta:'The servant Messiah',tag:'Gospel',api:'mark 1'},
+  {icon:'👨‍⚕️',name:'Luke',meta:"Luke's account of Jesus",tag:'Gospel',api:'luke 1'},
+  {icon:'❤️',name:'John',meta:'In the beginning was the Word…',tag:'Gospel',api:'john 1'},
+  {icon:'🔥',name:'Acts',meta:'The early church',tag:'History',api:'acts 1'},
+  {icon:'⚡',name:'Romans',meta:'Righteousness revealed',tag:'Epistle',api:'romans 8'},
+  {icon:'💒',name:'1 Corinthians',meta:'The love chapter',tag:'Epistle',api:'1 corinthians 13'},
+  {icon:'✉️',name:'2 Corinthians',meta:"Paul's ministry",tag:'Epistle',api:'2 corinthians 1'},
+  {icon:'📜',name:'Galatians',meta:'Freedom in Christ',tag:'Epistle',api:'galatians 5'},
+  {icon:'🛡️',name:'Ephesians',meta:'The armor of God',tag:'Epistle',api:'ephesians 6'},
+  {icon:'😊',name:'Philippians',meta:'Joy in all circumstances',tag:'Epistle',api:'philippians 4'},
+  {icon:'👑',name:'Hebrews',meta:'The faith hall of fame',tag:'Epistle',api:'hebrews 11'},
+  {icon:'💪',name:'James',meta:'Faith and works',tag:'Epistle',api:'james 1'},
+  {icon:'🌅',name:'1 Peter',meta:'Living hope',tag:'Epistle',api:'1 peter 1'},
+  {icon:'💖',name:'1 John',meta:'God is love',tag:'Epistle',api:'1 john 4'},
+  {icon:'🔮',name:'Revelation',meta:'What is to come',tag:'Prophecy',api:'revelation 21'},
 ];
 const africanBooks = [
   {icon:'🌌',name:'Book of Enoch (1 Enoch)',meta:'Ancient apocalyptic visions of the Watchers and the divine throne',tag:'EXCLUSIVE, Ethiopian Canon',exclusive:true},
@@ -1039,24 +1114,29 @@ function updateScrollBox(verses) {
 }
 
 function togglePlay() {
-  initAudio();
-  isPlaying = !isPlaying;
   const btn = document.getElementById('play-btn');
+  const track = audioTracks[currentTrackKey];
+  updateScrollBox(track.verses);
+  const titleEl = document.querySelector('.audio-title');
+  if(titleEl) titleEl.textContent = track.title;
+  
   if(isPlaying) {
-    audioEl.play().then(()=>{
-      btn.textContent = '⏸';
-      startScroll();
-      showToast('🎧 Playing, follow along below!');
-    }).catch(()=>{
-      isPlaying = false;
-      btn.textContent = '▶';
-      showToast('⚠️ Tap play again to start audio');
-    });
-  } else {
-    audioEl.pause();
+    window.speechSynthesis.cancel();
+    isPlaying = false;
     btn.textContent = '▶';
     stopScroll();
     showToast('⏸ Paused');
+    return;
+  }
+  
+  const text = track.verses.map(v => 'Verse ' + v.n + '. ' + v.t).join(' ');
+  if(speakText(text)) {
+    isPlaying = true;
+    btn.textContent = '⏸';
+    startScroll();
+    showToast('🎧 Playing with your device voice');
+  } else {
+    showToast('⚠️ Enable audio in your browser settings');
   }
 }
 
@@ -1198,6 +1278,134 @@ function handleUpgrade() {
   setTimeout(()=>showToast('🙏 Welcome to The Word 365 Pro!'),2500);
 }
 
+// ── BIBLE API READER (fetches real scripture) ──
+async function openBibleReader(ref, title) {
+  document.getElementById('reader-title').textContent = title + ' · Loading...';
+  const body = document.getElementById('reader-body');
+  body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);font-style:italic;">Loading scripture…</p>';
+  document.getElementById('reader').classList.add('open');
+  
+  try {
+    const url = 'https://bible-api.com/' + encodeURIComponent(ref) + '?translation=kjv';
+    const res = await fetch(url);
+    const data = await res.json();
+    
+    if (data.verses && data.verses.length) {
+      document.getElementById('reader-title').textContent = data.reference || title;
+      body.innerHTML = data.verses.map(v => `
+        <div class="verse-block" onclick="magnifyVerse(${v.verse},'${v.text.trim().replace(/'/g,"\\'")}')">
+          <span class="verse-num">${v.verse}</span>
+          <span class="verse-text">${v.text.trim()}</span>
+        </div>`).join('');
+      // Store for Ari context
+      window.currentScripture = data.reference + ': ' + data.verses.map(v => v.verse + '. ' + v.text.trim()).join(' ');
+    } else {
+      body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Scripture not available. Try another book.</p>';
+    }
+  } catch (e) {
+    body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Connection error. Check your internet.</p>';
+  }
+}
+
+// ── CROSS-DEVICE TTS AUDIO (Web Speech API) ──
+let ttsUtterance = null;
+let ttsVoices = [];
+let ttsSelectedVoice = null;
+
+function loadVoices() {
+  ttsVoices = window.speechSynthesis.getVoices();
+  if (!ttsSelectedVoice && ttsVoices.length) {
+    ttsSelectedVoice = ttsVoices.find(v => /en/i.test(v.lang) && /male/i.test(v.name)) 
+                    || ttsVoices.find(v => /en/i.test(v.lang))
+                    || ttsVoices[0];
+  }
+}
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function speakText(text) {
+  if (!('speechSynthesis' in window)) {
+    showToast('⚠️ Audio not supported on this device');
+    return false;
+  }
+  window.speechSynthesis.cancel();
+  ttsUtterance = new SpeechSynthesisUtterance(text);
+  if (ttsSelectedVoice) ttsUtterance.voice = ttsSelectedVoice;
+  ttsUtterance.rate = 0.85;
+  ttsUtterance.pitch = 1;
+  ttsUtterance.volume = 1;
+  ttsUtterance.onend = () => {
+    isPlaying = false;
+    const btn = document.getElementById('play-btn');
+    if (btn) btn.textContent = '▶';
+    stopScroll();
+  };
+  ttsUtterance.onerror = () => {
+    isPlaying = false;
+    const btn = document.getElementById('play-btn');
+    if (btn) btn.textContent = '▶';
+  };
+  window.speechSynthesis.speak(ttsUtterance);
+  return true;
+}
+
+// ── ARI AI CHAT (calls secure Supabase backend) ──
+const ARI_ENDPOINT = 'https://fnlcwwqltqksowtlefpb.supabase.co/functions/v1/ari-chat';
+
+async function askAri() {
+  const input = document.getElementById('ari-input');
+  if (!input) return;
+  const question = input.value.trim();
+  if (!question) { showToast('Ask Ari anything about the Word'); return; }
+  
+  const msgs = document.getElementById('ari-messages');
+  // Add user message
+  msgs.innerHTML += `<div class="ari-msg ari-user"><div class="ari-bubble-user">${escapeHtml(question)}</div></div>`;
+  input.value = '';
+  
+  // Add thinking indicator
+  msgs.innerHTML += `<div class="ari-msg ari-bot" id="ari-thinking"><div class="ari-avatar">🦁</div><div class="ari-bubble-bot"><em style="opacity:0.6;">Ari is reflecting…</em></div></div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+  
+  try {
+    const contextPrefix = window.currentScripture ? `Context from what the user is reading: ${window.currentScripture}\n\nQuestion: ` : '';
+    const res = await fetch(ARI_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: contextPrefix + question, engine: 'claude' })
+    });
+    const data = await res.json();
+    
+    document.getElementById('ari-thinking')?.remove();
+    
+    if (data.answer) {
+      const formatted = escapeHtml(data.answer).replace(/\n/g,'<br>');
+      msgs.innerHTML += `<div class="ari-msg ari-bot"><div class="ari-avatar">🦁</div><div class="ari-bubble-bot">${formatted}</div></div>`;
+    } else {
+      msgs.innerHTML += `<div class="ari-msg ari-bot"><div class="ari-avatar">🦁</div><div class="ari-bubble-bot"><em>Sorry, I had trouble answering. Please try again.</em></div></div>`;
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+  } catch (e) {
+    document.getElementById('ari-thinking')?.remove();
+    msgs.innerHTML += `<div class="ari-msg ari-bot"><div class="ari-avatar">🦁</div><div class="ari-bubble-bot"><em>Connection error. Please try again.</em></div></div>`;
+  }
+}
+
+function askAriOnEnter(e) {
+  if (e.key === 'Enter') askAri();
+}
+
+function askAriQuick(prompt) {
+  document.getElementById('ari-input').value = prompt;
+  askAri();
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 // ── TOAST ──
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -1208,7 +1416,11 @@ function showToast(msg) {
 
 // ── BUILD LISTS ──
 function buildCard(book) {
-  return `<div class="book-card" onclick="showToast('📖 Opening ${book.name}…')">
+  const apiRef = book.api ? book.api.replace(/'/g, "\\'") : '';
+  const action = book.api
+    ? `openBibleReader('${apiRef}','${book.name.replace(/'/g,"\\'")}')`
+    : `showToast('🔒 Pro-exclusive content — coming soon!')`;
+  return `<div class="book-card" onclick="${action}">
     <div class="book-icon">${book.icon}</div>
     <div class="book-info">
       <div class="book-name">${book.name}</div>
