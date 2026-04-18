@@ -346,6 +346,16 @@ body {
 
 .pro-badge-mini { display:inline-block; background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:var(--white); font-family:'Cinzel',serif; font-size:0.55rem; letter-spacing:0.15em; padding:0.2rem 0.5rem; border-radius:3px; margin-left:0.4rem; vertical-align:middle; }
 
+/* ── TTS LISTEN BUTTON ── */
+.listen-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; padding:0.7rem 0.9rem; background:linear-gradient(135deg,rgba(58,123,213,0.08),rgba(201,150,58,0.06)); border:1px solid rgba(201,150,58,0.25); border-radius:10px; }
+.listen-btn { flex:1; background:linear-gradient(135deg,var(--blue),#2f68b8); border:none; color:var(--white); font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.15em; padding:0.65rem 1rem; border-radius:6px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.4rem; box-shadow:0 2px 8px rgba(58,123,213,0.2); }
+.listen-btn:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(58,123,213,0.3); }
+.listen-btn.playing { background:linear-gradient(135deg,var(--gold),#a67a28); }
+.listen-icon { font-size:0.9rem; }
+.listen-speed { background:var(--white); border:1px solid var(--cream-dark); color:var(--brown); font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.1em; padding:0.5rem 0.7rem; border-radius:6px; cursor:pointer; transition:all 0.2s; }
+.listen-speed:hover { border-color:var(--blue); color:var(--blue); }
+.verse-block.reading { background:var(--gold-pale); border-left:3px solid var(--gold); padding-left:0.7rem; }
+
 /* ── BOTTOM NAV ── */
 .bottom-nav { background:var(--white); border-top:1px solid var(--cream-dark); display:flex; position:sticky; bottom:0; z-index:100; }
 .bnav-item { flex:1; padding:0.65rem 0.4rem 0.55rem; display:flex; flex-direction:column; align-items:center; gap:0.18rem; background:none; border:none; cursor:pointer; color:var(--brown-soft); transition:color 0.2s; }
@@ -478,7 +488,7 @@ body {
     <!-- ══ HOME ══ -->
     <div class="panel active" id="panel-home">
       <div class="hero">
-        <div class="hero-greeting">✦ GOOD MORNING, BELOVED · APRIL 15, 2026</div>
+        <div class="hero-greeting" id="hero-greeting">✦ GOOD MORNING, BELOVED</div>
         <div class="hero-day">Day <span>104</span> of 365</div>
         <div class="hero-verse">"Thy word is a lamp unto my feet, and a light unto my path.", Psalm 119:105</div>
       </div>
@@ -669,7 +679,7 @@ body {
         <div class="sec-desc">Write freely. Attach notes to verses. Your thoughts, preserved.</div>
       </div>
 
-      <div class="journal-date" id="journal-date">WEDNESDAY, APRIL 15, 2026 · DAY 104</div>
+      <div class="journal-date" id="journal-date">Today</div>
 
       <div class="note-verse">
         <em>"Great peace have they which love thy law: and nothing shall offend them."</em>
@@ -1055,6 +1065,7 @@ function openReader(key) {
   document.getElementById('reader').classList.add('open');
 }
 function closeReader() { 
+  stopCanonTTS();
   document.getElementById('reader').classList.remove('open'); 
   currentCanonBook = null;
   currentCanonChapter = 1;
@@ -1818,6 +1829,124 @@ function checkProUnlock() {
 }
 let isProUnlocked = checkProUnlock();
 
+// ═══ DYNAMIC DATE & GREETING ═══
+function initDynamicDates() {
+  const now = new Date();
+  const hour = now.getHours();
+  let greeting = 'GOOD MORNING';
+  if(hour >= 12 && hour < 17) greeting = 'GOOD AFTERNOON';
+  else if(hour >= 17) greeting = 'GOOD EVENING';
+
+  const months = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+  const weekdays = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  const dateStr = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  const fullDateStr = `${weekdays[now.getDay()]}, ${dateStr}`;
+
+  const heroEl = document.getElementById('hero-greeting');
+  if(heroEl) heroEl.innerHTML = `✦ ${greeting}, BELOVED · ${dateStr}`;
+
+  const journalEl = document.getElementById('journal-date');
+  if(journalEl) journalEl.innerHTML = fullDateStr;
+}
+
+// ═══ TEXT-TO-SPEECH (Browser TTS) ═══
+let canonTts = null;
+let canonTtsPlaying = false;
+let canonTtsIdx = 0;
+let canonTtsQueue = [];
+let canonTtsSpeed = 1.0;
+
+function stopCanonTTS() {
+  if(window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+  canonTtsPlaying = false;
+  canonTts = null;
+  canonTtsQueue = [];
+  canonTtsIdx = 0;
+  // Remove reading highlights
+  document.querySelectorAll('.verse-block.reading').forEach(el => el.classList.remove('reading'));
+  // Reset button
+  const btn = document.getElementById('listen-btn');
+  if(btn) {
+    btn.classList.remove('playing');
+    btn.innerHTML = '<span class="listen-icon">▶</span> LISTEN';
+  }
+}
+
+function toggleCanonTTS() {
+  if(!('speechSynthesis' in window)) {
+    showToast('🔇 Audio not supported on this device');
+    return;
+  }
+  if(canonTtsPlaying) {
+    stopCanonTTS();
+    return;
+  }
+  // Build queue from current chapter
+  const book = ethiopianCanon[currentCanonBook];
+  if(!book) return;
+  const ch = book.chapters.find(c => c.n === currentCanonChapter);
+  if(!ch) return;
+  canonTtsQueue = ch.verses.slice();
+  canonTtsIdx = 0;
+  canonTtsPlaying = true;
+  const btn = document.getElementById('listen-btn');
+  if(btn) {
+    btn.classList.add('playing');
+    btn.innerHTML = '<span class="listen-icon">⏸</span> PAUSE';
+  }
+  playNextCanonVerse();
+}
+
+function playNextCanonVerse() {
+  if(!canonTtsPlaying || canonTtsIdx >= canonTtsQueue.length) {
+    stopCanonTTS();
+    return;
+  }
+  const v = canonTtsQueue[canonTtsIdx];
+  // Highlight current verse
+  document.querySelectorAll('.verse-block.reading').forEach(el => el.classList.remove('reading'));
+  const verseEls = document.querySelectorAll('.reader-body .verse-block');
+  if(verseEls[canonTtsIdx]) {
+    verseEls[canonTtsIdx].classList.add('reading');
+    verseEls[canonTtsIdx].scrollIntoView({behavior:'smooth', block:'center'});
+  }
+  canonTts = new SpeechSynthesisUtterance(v.t);
+  canonTts.rate = canonTtsSpeed;
+  canonTts.pitch = 1.0;
+  canonTts.volume = 1.0;
+  // Try to select a premium voice
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(vc => vc.name.includes('Samantha')) 
+                 || voices.find(vc => vc.name.includes('Daniel'))
+                 || voices.find(vc => vc.name.includes('Google US English'))
+                 || voices.find(vc => vc.lang.startsWith('en'));
+  if(preferred) canonTts.voice = preferred;
+  canonTts.onend = () => {
+    canonTtsIdx++;
+    if(canonTtsPlaying) setTimeout(playNextCanonVerse, 200);
+  };
+  canonTts.onerror = () => {
+    stopCanonTTS();
+  };
+  window.speechSynthesis.speak(canonTts);
+}
+
+function cycleCanonTTSSpeed() {
+  const speeds = [0.85, 1.0, 1.15, 1.35];
+  const idx = speeds.indexOf(canonTtsSpeed);
+  canonTtsSpeed = speeds[(idx+1) % speeds.length];
+  const btn = document.getElementById('listen-speed');
+  if(btn) btn.textContent = canonTtsSpeed + 'x';
+  if(canonTtsPlaying) {
+    // Restart current verse at new speed
+    window.speechSynthesis.cancel();
+    setTimeout(playNextCanonVerse, 100);
+  }
+  showToast(`🔊 Speed: ${canonTtsSpeed}x`);
+}
+
 // ═══ ETHIOPIAN CANON READER ═══
 let currentCanonBook = null;
 let currentCanonChapter = 1;
@@ -1901,6 +2030,15 @@ function loadEthiopianChapter() {
   html += `<div class="chapter-title-display">${ch.title}</div>
     <div class="chapter-section-display">${sectionName}</div>`;
 
+  // Listen (TTS) controls
+  html += `
+    <div class="listen-bar">
+      <button class="listen-btn" id="listen-btn" onclick="toggleCanonTTS()">
+        <span class="listen-icon">▶</span> LISTEN
+      </button>
+      <button class="listen-speed" id="listen-speed" onclick="cycleCanonTTSSpeed()">${canonTtsSpeed}x</button>
+    </div>`;
+
   html += ch.verses.map(v => `
     <div class="verse-block" onclick="magnifyVerse(${v.n},'${v.t.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
       <span class="verse-num">${v.n}</span>
@@ -1924,6 +2062,7 @@ function loadEthiopianChapter() {
 function nextCanonChapter() {
   const book = ethiopianCanon[currentCanonBook];
   if(currentCanonChapter < book.chapters.length) {
+    stopCanonTTS();
     currentCanonChapter++;
     loadEthiopianChapter();
   }
@@ -1931,6 +2070,7 @@ function nextCanonChapter() {
 
 function prevCanonChapter() {
   if(currentCanonChapter > 1) {
+    stopCanonTTS();
     currentCanonChapter--;
     loadEthiopianChapter();
   }
@@ -1960,6 +2100,7 @@ function closeChapterPicker() {
 }
 
 function jumpToChapter(n) {
+  stopCanonTTS();
   currentCanonChapter = n;
   closeChapterPicker();
   loadEthiopianChapter();
@@ -2002,6 +2143,7 @@ buildVersions();
 
 // ── INIT ──
 window.addEventListener('load',()=>{
+  initDynamicDates();
   setTimeout(()=>{
     document.getElementById('splash').style.opacity='0';
     setTimeout(()=>{
@@ -2026,4 +2168,3 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
-
