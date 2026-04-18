@@ -113,8 +113,12 @@ body {
 .font-preview { font-family:'Cinzel',serif; font-size:0.6rem; color:var(--brown-soft); }
 
 /* ── TABS ── */
-.tabs { display:flex; overflow-x:auto; background:var(--white); border-bottom:1px solid var(--cream-dark); scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.tabs { display:flex; overflow-x:auto; background:var(--white); border-bottom:1px solid var(--cream-dark); scrollbar-width:none; -webkit-overflow-scrolling:touch; position:relative; }
 .tabs::-webkit-scrollbar { display:none; }
+.tabs-wrap { position:relative; background:var(--white); }
+.tabs-wrap::after { content:''; position:absolute; top:0; right:0; bottom:1px; width:40px; background:linear-gradient(to right, rgba(255,255,255,0), var(--white) 60%); pointer-events:none; z-index:2; }
+.tabs-wrap::before { content:'›'; position:absolute; top:50%; right:12px; transform:translateY(-55%); font-size:1.2rem; color:var(--blue); pointer-events:none; z-index:3; opacity:0.6; font-weight:bold; animation:scrollHint 2s ease-in-out infinite; }
+@keyframes scrollHint { 0%,100%{transform:translateY(-55%) translateX(0);opacity:0.5;} 50%{transform:translateY(-55%) translateX(4px);opacity:0.9;} }
 .tab { flex-shrink:0; padding:0.75rem 0.9rem; font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.1em; color:var(--brown-soft); background:none; border:none; cursor:pointer; border-bottom:2px solid transparent; transition:all 0.2s; white-space:nowrap; }
 .tab.active { color:var(--blue); border-bottom-color:var(--blue); }
 .tab:hover { color:var(--brown); }
@@ -468,18 +472,20 @@ body {
   </div>
 
   <!-- TABS -->
+  <div class="tabs-wrap">
   <div class="tabs">
     <button class="tab active" onclick="showPanel('home')" id="tab-home">🏠 HOME</button>
     <button class="tab" onclick="showPanel('read')" id="tab-read">📖 READ</button>
+    <button class="tab" onclick="showPanel('versions')" id="tab-versions">📚 VERSIONS</button>
     <button class="tab" onclick="showPanel('audio')" id="tab-audio">🎧 AUDIO</button>
     <button class="tab" onclick="showPanel('african')" id="tab-african">🌍 AFRICAN ROOTS</button>
     <button class="tab" onclick="showPanel('scrolls')" id="tab-scrolls">📜 HIDDEN SCROLLS</button>
     <button class="tab" onclick="showPanel('concordance')" id="tab-concordance">🔍 CONCORDANCE</button>
     <button class="tab" onclick="showPanel('journal')" id="tab-journal">✍️ JOURNAL</button>
     <button class="tab" onclick="showPanel('ari')" id="tab-ari">🦁 ASK ARI</button>
-    <button class="tab" onclick="showPanel('versions')" id="tab-versions">📚 VERSIONS</button>
     <button class="tab" onclick="showPanel('tracker')" id="tab-tracker">📊 TRACKER</button>
     <button class="tab" onclick="showPanel('pro')" id="tab-pro">👑 GO PRO</button>
+  </div>
   </div>
 
   <!-- CONTENT -->
@@ -1855,6 +1861,7 @@ let canonTtsPlaying = false;
 let canonTtsIdx = 0;
 let canonTtsQueue = [];
 let canonTtsSpeed = 1.0;
+let canonTtsMode = localStorage.getItem('canon_tts_mode') || 'flow'; // 'flow' or 'verses'
 
 function stopCanonTTS() {
   if(window.speechSynthesis) {
@@ -1912,7 +1919,11 @@ function playNextCanonVerse() {
     verseEls[canonTtsIdx].classList.add('reading');
     verseEls[canonTtsIdx].scrollIntoView({behavior:'smooth', block:'center'});
   }
-  canonTts = new SpeechSynthesisUtterance(v.t);
+  // Build text based on mode
+  const spokenText = canonTtsMode === 'verses' 
+    ? `Verse ${v.n}. ${v.t}` 
+    : v.t;
+  canonTts = new SpeechSynthesisUtterance(spokenText);
   canonTts.rate = canonTtsSpeed;
   canonTts.pitch = 1.0;
   canonTts.volume = 1.0;
@@ -1931,6 +1942,19 @@ function playNextCanonVerse() {
     stopCanonTTS();
   };
   window.speechSynthesis.speak(canonTts);
+}
+
+function toggleCanonTTSMode() {
+  canonTtsMode = (canonTtsMode === 'flow') ? 'verses' : 'flow';
+  localStorage.setItem('canon_tts_mode', canonTtsMode);
+  const btn = document.getElementById('listen-mode');
+  if(btn) btn.textContent = canonTtsMode === 'flow' ? 'FLOW' : 'VERSES';
+  if(canonTtsPlaying) {
+    // Restart current verse in new mode
+    window.speechSynthesis.cancel();
+    setTimeout(playNextCanonVerse, 100);
+  }
+  showToast(canonTtsMode === 'flow' ? '📖 Flow mode (no verse numbers)' : '🔢 Verse mode (announces numbers)');
 }
 
 function cycleCanonTTSSpeed() {
@@ -2036,6 +2060,7 @@ function loadEthiopianChapter() {
       <button class="listen-btn" id="listen-btn" onclick="toggleCanonTTS()">
         <span class="listen-icon">▶</span> LISTEN
       </button>
+      <button class="listen-speed" id="listen-mode" onclick="toggleCanonTTSMode()" title="Toggle verse announcement">${canonTtsMode === 'flow' ? 'FLOW' : 'VERSES'}</button>
       <button class="listen-speed" id="listen-speed" onclick="cycleCanonTTSSpeed()">${canonTtsSpeed}x</button>
     </div>`;
 
