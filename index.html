@@ -267,12 +267,18 @@ body {
 
 /* ── VERSIONS ── */
 .versions-grid { display:flex; flex-direction:column; gap:0.6rem; }
-.version-card { background:var(--white); border:1px solid var(--cream-dark); border-radius:10px; padding:0.9rem 1rem; cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s; }
+.version-card { background:var(--white); border:1px solid var(--cream-dark); border-radius:10px; padding:0.9rem 1rem; cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s; position:relative; }
 .version-card.selected { border-color:var(--blue); background:var(--blue-light); }
 .version-card:hover { border-color:rgba(58,123,213,0.4); }
+.version-card.locked { background:linear-gradient(135deg,rgba(201,150,58,0.04),rgba(255,255,255,1)); border-color:rgba(201,150,58,0.25); }
+.version-card.locked:hover { border-color:var(--gold); }
+.version-card.locked .version-abbr { color:var(--brown-mid); }
+.version-pro-tag { display:inline-block; background:linear-gradient(135deg,var(--gold-light),var(--gold)); color:var(--white); font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.15em; padding:0.2rem 0.45rem; border-radius:3px; margin-left:0.5rem; vertical-align:middle; }
+.version-free-tag { display:inline-block; background:var(--blue-light); color:var(--blue); font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.15em; padding:0.2rem 0.45rem; border-radius:3px; margin-left:0.5rem; vertical-align:middle; border:1px solid rgba(58,123,213,0.2); }
 .version-abbr { font-family:'Cinzel',serif; font-size:0.95rem; color:var(--blue); letter-spacing:0.08em; }
 .version-name { font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--brown-soft); font-style:italic; margin-top:0.1rem; }
 .version-check { color:var(--blue); font-size:1rem; }
+.version-lock { color:var(--gold); font-size:1.1rem; }
 
 /* ── PAYWALL ── */
 .paywall { background:linear-gradient(135deg, var(--white) 0%, var(--cream) 100%); border:1px solid var(--cream-dark); border-radius:16px; padding:1.8rem 1.4rem; text-align:center; margin-bottom:1.2rem; position:relative; overflow:hidden; }
@@ -719,7 +725,7 @@ body {
       <div class="sec-header">
         <div class="sec-eye">✦ Bible Translations ✦</div>
         <div class="sec-title">Versions</div>
-        <div class="sec-desc">9 translations available. Tap to set your default.</div>
+        <div class="sec-desc">9 translations available. Tap any to set as your default reading version.</div>
       </div>
       <div class="versions-grid" id="versions-list"></div>
     </div>
@@ -787,6 +793,7 @@ body {
         <div class="feat-list">
           <div class="feat-item"><span>🌍</span><span>African Roots, Full 81-book Ethiopian Canon</span></div>
           <div class="feat-item"><span>📜</span><span>Hidden Scrolls, Lost Books of the Bible</span></div>
+          <div class="feat-item"><span>📚</span><span>9 Bible Translations, NIV, ESV, NKJV, NLT, AMP, NASB, MSG, CSB + KJV</span></div>
           <div class="feat-item"><span>🔍</span><span>Full Concordance, Strong's Hebrew & Greek</span></div>
           <div class="feat-item"><span>🎧</span><span>Premium Voices, 6 narrators to choose from</span></div>
           <div class="feat-item"><span>✍️</span><span>Journal + Verse Notes</span></div>
