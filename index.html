@@ -637,7 +637,7 @@ body {
         <div class="paywall-title">Unlock The Full Ethiopian Canon</div>
         <div class="paywall-sub">Tap Book of Enoch above for a free preview, Chapter 1. Unlock Pro to read all 36 chapters of the Watchers plus 80 more sacred books.</div>
         <button class="unlock-btn" onclick="showPanel('pro')">UNLOCK WITH THE WORD 365 PRO →</button>
-        <div class="paywall-note">Starting at $4.99/month · Cancel anytime</div>
+        <div class="paywall-note">Starting at $6.99/month · 7-day free trial</div>
       </div>
     </div>
 
@@ -655,7 +655,7 @@ body {
         <div class="paywall-title">Unlock The Hidden Scrolls</div>
         <div class="paywall-sub">Books removed from the Bible. Ancient wisdom hidden for centuries. Now in the palm of your hand.</div>
         <button class="unlock-btn" onclick="showPanel('pro')">UNLOCK WITH THE WORD 365 PRO →</button>
-        <div class="paywall-note">Starting at $4.99/month · Cancel anytime</div>
+        <div class="paywall-note">Starting at $6.99/month · 7-day free trial</div>
       </div>
     </div>
 
@@ -804,17 +804,28 @@ body {
         <div class="price-row">
           <div class="price-card" id="price-mo" onclick="selectPrice('mo')">
             <div class="price-period">MONTHLY</div>
-            <div class="price-amt">$4.99</div>
-            <div class="price-save">per month</div>
+            <div class="price-amt">$6.99</div>
+            <div class="price-save">7-day free trial</div>
           </div>
           <div class="price-card sel" id="price-yr" onclick="selectPrice('yr')">
             <div class="price-period">YEARLY</div>
-            <div class="price-amt">$34.99</div>
-            <div class="price-save">Save 42% 🔥</div>
+            <div class="price-amt">$49.99</div>
+            <div class="price-save">Save 40% 🔥</div>
           </div>
         </div>
-        <button class="unlock-btn" onclick="handleUpgrade()">START MY 7-DAY FREE TRIAL →</button>
-        <div class="paywall-note">No charge for 7 days · Cancel anytime · No risk</div>
+        <button class="unlock-btn" onclick="handleUpgrade()">UPGRADE TO PRO →</button>
+        <div class="paywall-note" id="pro-cta-note">Yearly selected · No trial · Best value</div>
+      </div>
+
+      <div style="text-align:center;padding:0.5rem 0 0.5rem;">
+        <button onclick="togglePolicy()" style="background:none;border:none;color:var(--blue);font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.15em;cursor:pointer;text-decoration:underline;padding:0.5rem;">VIEW REFUND POLICY</button>
+        <div id="policy-box" style="display:none;text-align:left;background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem 1.1rem;margin-top:0.6rem;font-family:'Cormorant Garamond',serif;font-size:0.85rem;line-height:1.6;color:var(--brown);">
+          <div style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--blue);letter-spacing:0.12em;margin-bottom:0.6rem;">REFUND POLICY</div>
+          <p style="margin-bottom:0.6rem;">Due to the instant digital nature of our subscription, all purchases are <strong>final and non-refundable</strong>.</p>
+          <p style="margin-bottom:0.6rem;"><strong>What you CAN do:</strong> 7-day free trial on monthly plans, cancel anytime to stop future charges, keep access until current period ends.</p>
+          <p style="margin-bottom:0.6rem;"><strong>To cancel:</strong> Email Freedomarchitect08@gmail.com or call (443) 317-3194.</p>
+          <p>By subscribing you agree to this policy. Freedom Architect Enterprises.</p>
+        </div>
       </div>
 
       <div style="text-align:center;padding:1rem 0;">
@@ -1343,13 +1354,32 @@ function toggleSetting(id) {
 }
 
 // ── PRICE ──
+const STRIPE_LINKS = {
+  mo: 'https://buy.stripe.com/fZu00laka2yHduf9xw8so00',
+  yr: 'https://buy.stripe.com/28EcN74ZQ8X5cqb5hg8so01'
+};
+let selectedPlan = 'yr'; // default
+
 function selectPrice(t) {
+  selectedPlan = t;
   document.getElementById('price-mo').classList.toggle('sel',t==='mo');
   document.getElementById('price-yr').classList.toggle('sel',t==='yr');
+  const note = document.getElementById('pro-cta-note');
+  if(note) {
+    note.textContent = t === 'mo' 
+      ? 'Monthly selected · 7 days free · Cancel anytime' 
+      : 'Yearly selected · No trial · Best value';
+  }
 }
 function handleUpgrade() {
-  showToast('✨ Starting your free trial…');
-  setTimeout(()=>showToast('🙏 Welcome to The Word 365 Pro!'),2500);
+  showToast('✨ Redirecting to secure checkout…');
+  setTimeout(()=>{
+    window.location.href = STRIPE_LINKS[selectedPlan];
+  }, 800);
+}
+function togglePolicy() {
+  const box = document.getElementById('policy-box');
+  if(box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
 }
 
 // ── BIBLE API READER (fetches real scripture) ──
@@ -1832,11 +1862,30 @@ const ethiopianCanon = {
 };
 
 // ═══ PRO UNLOCK STATE ═══
-// Check URL param (?unlock=tee365) or localStorage for Pro access
+// Check URL param for Pro access
+// ?unlock=tee365 = admin (you) unlock
+// ?unlock=pro = customer just paid via Stripe — auto-unlock
 function checkProUnlock() {
   const params = new URLSearchParams(window.location.search);
-  if(params.get('unlock') === 'tee365') {
+  const code = params.get('unlock');
+  if(code === 'tee365' || code === 'pro') {
     localStorage.setItem('the_word_pro_unlocked','true');
+    // Show welcome toast for paid customers
+    if(code === 'pro') {
+      setTimeout(()=>{
+        const toast = document.getElementById('toast');
+        if(toast) {
+          toast.textContent = '👑 Welcome to Pro! Thank you for subscribing.';
+          toast.classList.add('show');
+          setTimeout(()=>toast.classList.remove('show'), 5000);
+        }
+      }, 2600);
+    }
+    // Clean URL so unlock param doesn't linger
+    try {
+      const cleanUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, document.title, cleanUrl);
+    } catch(e) {}
   }
   return localStorage.getItem('the_word_pro_unlocked') === 'true';
 }
@@ -2033,7 +2082,7 @@ function loadEthiopianChapter() {
         <div class="canon-paywall-title">UNLOCK THE FULL BOOK</div>
         <div class="canon-paywall-sub">You just read Chapter 1 of the Book of Enoch, ancient wisdom your ancestors preserved for centuries. Chapters 2, 36 reveal the fall of the Watchers, the Nephilim, Enoch's vision of God's throne, and his journey through the heavens.</div>
         <button class="canon-paywall-btn" onclick="closeReader();showPanel('pro')">UNLOCK WITH THE WORD 365 PRO</button>
-        <div class="canon-paywall-note">Starting at $4.99/month · Cancel anytime</div>
+        <div class="canon-paywall-note">Starting at $6.99/month · 7-day free trial</div>
       </div>`;
     return;
   }
