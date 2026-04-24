@@ -1,1 +1,518 @@
-expo/app/(tabs)/index.tsx
+import React, { useMemo } from "react";
+import {
+Image,
+Pressable,
+ScrollView,
+StyleSheet,
+Text,
+View,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+ArrowRight,
+BookOpen,
+Flame,
+Headphones,
+Library,
+ScrollText,
+Search,
+Sparkles,
+} from "lucide-react-native";
+import Colors from "@/constants/colors";
+import { CANON_BOOKS, DAILY_VERSE } from "@/constants/bible";
+import { useApp } from "@/providers/AppProvider";
+
+const C = Colors.light;
+
+export default function HomeScreen() {
+const insets = useSafeAreaInsets();
+const router = useRouter();
+const app = useApp();
+
+const completion = useMemo(() => {
+  const values = Object.values(app.progress);
+  if (!values.length) return 0;
+  return Math.round((values.reduce((a, b) => a + b, 0) / values.length) * 100);
+}, [app.progress]);
+
+const continueBook = useMemo(() => CANON_BOOKS.find((b) => b.id === "psa")!, []);
+
+return (
+  <View style={styles.root}>
+    <ScrollView
+      contentContainerStyle={{
+        paddingTop: insets.top + 12,
+        paddingBottom: 120,
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.eyebrow}>PEACE BE WITH YOU</Text>
+          <Text style={styles.greeting}>Good morning,{"\n"}Beloved.</Text>
+        </View>
+        <Pressable
+          style={styles.iconBtn}
+          onPress={() => router.push("/search" as never)}
+          testID="home-search"
+        >
+          <Search color={C.ink} size={20} strokeWidth={2} />
+        </Pressable>
+      </View>
+
+      <Pressable
+        onPress={() => router.push(`/reader?bookId=${continueBook.id}&chapter=23` as never)}
+        style={styles.verseCard}
+        testID="daily-verse"
+      >
+        <LinearGradient
+          colors={[C.oxblood, C.oxbloodDeep]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={StyleSheet.absoluteFill}
+        />
+        <View style={styles.verseOrnament}>
+          <Sparkles color={C.goldLight} size={14} strokeWidth={1.5} />
+          <Text style={styles.verseOrnamentText}>VERSE OF THE DAY</Text>
+          <Sparkles color={C.goldLight} size={14} strokeWidth={1.5} />
+        </View>
+        <Text style={styles.verseText}>&ldquo;{DAILY_VERSE.text}&rdquo;</Text>
+        <View style={styles.verseFooter}>
+          <Text style={styles.verseRef}>{DAILY_VERSE.reference}</Text>
+          <View style={styles.versePill}>
+            <Text style={styles.versePillText}>{DAILY_VERSE.translation}</Text>
+          </View>
+        </View>
+        <View style={styles.goldBar} />
+      </Pressable>
+
+      <View style={styles.statsRow}>
+        <StatCard
+          icon={<Flame color={C.terracotta} size={18} strokeWidth={2.2} />}
+          value={`${app.streak}`}
+          label="day streak"
+        />
+        <StatCard
+          icon={<BookOpen color={C.sage} size={18} strokeWidth={2.2} />}
+          value={`${app.daysRead}`}
+          label="days read"
+        />
+        <StatCard
+          icon={<Library color={C.gold} size={18} strokeWidth={2.2} />}
+          value={`${completion}%`}
+          label="complete"
+        />
+      </View>
+
+      <SectionHeader title="Continue reading" />
+      <Pressable
+        onPress={() => router.push(`/reader?bookId=${continueBook.id}&chapter=23` as never)}
+        style={styles.continueCard}
+        testID="continue-reading"
+      >
+        <Image
+          source={{
+            uri: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=600",
+          }}
+          style={styles.continueImg}
+        />
+        <LinearGradient
+          colors={["transparent", "rgba(28,22,18,0.85)"]}
+          style={StyleSheet.absoluteFill}
+        />
+        <View style={styles.continueContent}>
+          <Text style={styles.continueEyebrow}>BOOK OF PSALMS</Text>
+          <Text style={styles.continueTitle}>Psalm 23 · The Lord is my Shepherd</Text>
+          <View style={styles.continueFooter}>
+            <View style={styles.progressTrack}>
+              <View style={[styles.progressFill, { width: `${(app.progress.psa ?? 0) * 100}%` }]} />
+            </View>
+            <View style={styles.playBtn}>
+              <ArrowRight color={C.ink} size={18} strokeWidth={2.5} />
+            </View>
+          </View>
+        </View>
+      </Pressable>
+
+      <SectionHeader title="Today's path" />
+      <View style={styles.pathGrid}>
+        <PathTile
+          color={C.oxblood}
+          icon={<ScrollText color={C.goldLight} size={22} strokeWidth={2} />}
+          label="African Roots"
+          sub="Ge'ez · 81 books"
+          onPress={() => router.push("/(tabs)/roots" as never)}
+        />
+        <PathTile
+          color={C.charcoal}
+          icon={<Headphones color={C.goldLight} size={22} strokeWidth={2} />}
+          label="Audio Bible"
+          sub="Listen & read"
+          onPress={() => router.push(`/reader?bookId=psa&chapter=23&audio=1` as never)}
+        />
+        <PathTile
+          color={C.terracotta}
+          icon={<Library color="#FFF3DA" size={22} strokeWidth={2} />}
+          label="Concordance"
+          sub="Strong's study"
+          onPress={() => router.push("/search" as never)}
+        />
+        <PathTile
+          color={C.sage}
+          icon={<BookOpen color="#FFF3DA" size={22} strokeWidth={2} />}
+          label="Hidden Scrolls"
+          sub="Apocrypha"
+          onPress={() => router.push("/(tabs)/roots" as never)}
+        />
+      </View>
+
+      <SectionHeader title="Reflection" action="See all" onAction={() => router.push("/(tabs)/journal" as never)} />
+      {app.entries.slice(0, 2).map((entry) => (
+        <View key={entry.id} style={styles.journalPreview}>
+          <View style={styles.journalDot} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.journalTitle}>{entry.title}</Text>
+            <Text numberOfLines={2} style={styles.journalBody}>
+              {entry.body}
+            </Text>
+            {entry.verse ? <Text style={styles.journalVerse}>{entry.verse}</Text> : null}
+          </View>
+        </View>
+      ))}
+    </ScrollView>
+  </View>
+);
+}
+
+function StatCard({
+icon,
+value,
+label,
+}: {
+icon: React.ReactNode;
+value: string;
+label: string;
+}) {
+return (
+  <View style={styles.stat}>
+    <View style={styles.statIcon}>{icon}</View>
+    <Text style={styles.statValue}>{value}</Text>
+    <Text style={styles.statLabel}>{label}</Text>
+  </View>
+);
+}
+
+function SectionHeader({
+title,
+action,
+onAction,
+}: {
+title: string;
+action?: string;
+onAction?: () => void;
+}) {
+return (
+  <View style={styles.sectionHeader}>
+    <Text style={styles.sectionTitle}>{title}</Text>
+    {action ? (
+      <Pressable onPress={onAction} hitSlop={10}>
+        <Text style={styles.sectionAction}>{action}</Text>
+      </Pressable>
+    ) : null}
+  </View>
+);
+}
+
+function PathTile({
+color,
+icon,
+label,
+sub,
+onPress,
+}: {
+color: string;
+icon: React.ReactNode;
+label: string;
+sub: string;
+onPress: () => void;
+}) {
+return (
+  <Pressable onPress={onPress} style={[styles.pathTile, { backgroundColor: color }]}>
+    <View style={styles.pathIcon}>{icon}</View>
+    <View style={{ marginTop: "auto" }}>
+      <Text style={styles.pathLabel}>{label}</Text>
+      <Text style={styles.pathSub}>{sub}</Text>
+    </View>
+  </Pressable>
+);
+}
+
+const styles = StyleSheet.create({
+root: { flex: 1, backgroundColor: C.background },
+header: {
+  flexDirection: "row",
+  alignItems: "flex-start",
+  justifyContent: "space-between",
+  paddingHorizontal: 24,
+  marginBottom: 20,
+},
+eyebrow: {
+  fontSize: 10,
+  letterSpacing: 2,
+  color: C.gold,
+  fontWeight: "700",
+  marginBottom: 6,
+},
+greeting: {
+  fontSize: 30,
+  fontWeight: "700",
+  color: C.ink,
+  lineHeight: 36,
+  letterSpacing: -0.5,
+},
+iconBtn: {
+  width: 44,
+  height: 44,
+  borderRadius: 22,
+  backgroundColor: C.cream,
+  alignItems: "center",
+  justifyContent: "center",
+  borderWidth: StyleSheet.hairlineWidth,
+  borderColor: C.border,
+},
+verseCard: {
+  marginHorizontal: 20,
+  borderRadius: 24,
+  overflow: "hidden",
+  padding: 24,
+  paddingBottom: 20,
+  marginBottom: 18,
+  minHeight: 220,
+},
+verseOrnament: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 8,
+  marginBottom: 14,
+},
+verseOrnamentText: {
+  fontSize: 10,
+  letterSpacing: 2.5,
+  color: C.goldLight,
+  fontWeight: "700",
+},
+verseText: {
+  fontSize: 19,
+  lineHeight: 28,
+  color: "#FBEFD3",
+  fontWeight: "500",
+  letterSpacing: 0.2,
+},
+verseFooter: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  marginTop: 16,
+},
+verseRef: {
+  fontSize: 14,
+  color: C.goldLight,
+  fontWeight: "600",
+  letterSpacing: 0.5,
+},
+versePill: {
+  paddingHorizontal: 10,
+  paddingVertical: 4,
+  borderRadius: 10,
+  borderWidth: 1,
+  borderColor: "rgba(232,200,122,0.5)",
+},
+versePillText: {
+  fontSize: 11,
+  color: C.goldLight,
+  fontWeight: "700",
+  letterSpacing: 1,
+},
+goldBar: {
+  position: "absolute",
+  left: 24,
+  bottom: 0,
+  height: 3,
+  width: 40,
+  backgroundColor: C.gold,
+  borderRadius: 2,
+},
+statsRow: {
+  flexDirection: "row",
+  paddingHorizontal: 20,
+  gap: 10,
+  marginBottom: 26,
+},
+stat: {
+  flex: 1,
+  backgroundColor: C.cream,
+  borderRadius: 18,
+  padding: 14,
+  borderWidth: StyleSheet.hairlineWidth,
+  borderColor: C.border,
+},
+statIcon: {
+  width: 32,
+  height: 32,
+  borderRadius: 10,
+  backgroundColor: C.background,
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: 10,
+},
+statValue: {
+  fontSize: 22,
+  fontWeight: "700",
+  color: C.ink,
+  letterSpacing: -0.5,
+},
+statLabel: {
+  fontSize: 11,
+  color: C.textMuted,
+  marginTop: 2,
+  letterSpacing: 0.3,
+},
+sectionHeader: {
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingHorizontal: 24,
+  marginTop: 8,
+  marginBottom: 14,
+},
+sectionTitle: {
+  fontSize: 18,
+  fontWeight: "700",
+  color: C.ink,
+  letterSpacing: -0.3,
+},
+sectionAction: {
+  fontSize: 13,
+  color: C.oxblood,
+  fontWeight: "600",
+},
+continueCard: {
+  height: 170,
+  marginHorizontal: 20,
+  borderRadius: 22,
+  overflow: "hidden",
+  marginBottom: 24,
+  backgroundColor: C.charcoal,
+},
+continueImg: { ...StyleSheet.absoluteFillObject, width: "100%", height: "100%", opacity: 0.55 },
+continueContent: {
+  flex: 1,
+  padding: 18,
+  justifyContent: "flex-end",
+},
+continueEyebrow: {
+  fontSize: 10,
+  letterSpacing: 2,
+  color: C.goldLight,
+  fontWeight: "700",
+  marginBottom: 6,
+},
+continueTitle: {
+  fontSize: 20,
+  fontWeight: "700",
+  color: "#FFF",
+  letterSpacing: -0.3,
+},
+continueFooter: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 12,
+  marginTop: 14,
+},
+progressTrack: {
+  flex: 1,
+  height: 5,
+  borderRadius: 3,
+  backgroundColor: "rgba(255,255,255,0.2)",
+  overflow: "hidden",
+},
+progressFill: {
+  height: "100%",
+  backgroundColor: C.gold,
+},
+playBtn: {
+  width: 36,
+  height: 36,
+  borderRadius: 18,
+  backgroundColor: C.goldLight,
+  alignItems: "center",
+  justifyContent: "center",
+},
+pathGrid: {
+  paddingHorizontal: 20,
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: 10,
+  marginBottom: 24,
+},
+pathTile: {
+  width: "48.5%",
+  height: 130,
+  borderRadius: 20,
+  padding: 14,
+},
+pathIcon: {
+  width: 40,
+  height: 40,
+  borderRadius: 12,
+  backgroundColor: "rgba(255,255,255,0.12)",
+  alignItems: "center",
+  justifyContent: "center",
+},
+pathLabel: {
+  color: "#FFF",
+  fontSize: 15,
+  fontWeight: "700",
+  letterSpacing: -0.2,
+},
+pathSub: {
+  color: "rgba(255,255,255,0.7)",
+  fontSize: 11,
+  marginTop: 2,
+  letterSpacing: 0.3,
+},
+journalPreview: {
+  flexDirection: "row",
+  gap: 14,
+  paddingHorizontal: 24,
+  paddingVertical: 14,
+  alignItems: "flex-start",
+},
+journalDot: {
+  width: 8,
+  height: 8,
+  borderRadius: 4,
+  backgroundColor: C.gold,
+  marginTop: 6,
+},
+journalTitle: {
+  fontSize: 15,
+  fontWeight: "700",
+  color: C.ink,
+  marginBottom: 4,
+},
+journalBody: {
+  fontSize: 13,
+  lineHeight: 20,
+  color: C.textMuted,
+},
+journalVerse: {
+  fontSize: 11,
+  color: C.oxblood,
+  fontWeight: "600",
+  marginTop: 6,
+  letterSpacing: 0.3,
+},
+});
