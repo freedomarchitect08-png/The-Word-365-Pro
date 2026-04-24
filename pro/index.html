@@ -3,199 +3,230 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Support The Word 365</title>
-<meta name="description" content="Support The Word 365 with a one-time gift." />
+<title>Go Pro</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #0b1220;
-  --bg-2: #111a2e;
-  --card: #151f38;
-  --border: #223154;
-  --text: #f5f7fb;
-  --muted: #a8b3cf;
-  --gold: #d4af37;
-  --gold-2: #f2d675;
-  --accent: #4f8cff;
-}
-html, body {
-  background: radial-gradient(1200px 600px at 50% -10%, #1a2647 0%, var(--bg) 60%);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+  color: #fff;
   min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-.wrap { max-width: 980px; margin: 0 auto; padding: 48px 20px 80px; }
-header { text-align: center; margin-bottom: 40px; }
-.eyebrow {
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
-  padding: 6px 14px;
-  border: 1px solid rgba(212,175,55,0.35);
-  border-radius: 999px;
-  margin-bottom: 18px;
-}
-h1 {
-  font-size: clamp(32px, 5vw, 48px);
-  line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 14px;
-}
-h1 .accent {
-  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.sub { color: var(--muted); font-size: 17px; max-width: 620px; margin: 0 auto; line-height: 1.55; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 16px;
-  margin: 32px 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 .card {
-  position: relative;
-  background: linear-gradient(180deg, var(--card), #101a31);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 22px 20px;
-  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 32px 24px;
+  max-width: 420px;
+  width: 100%;
+  backdrop-filter: blur(20px);
 }
-.card:hover { transform: translateY(-2px); border-color: rgba(212,175,55,0.45); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
-.card.featured {
-  border-color: rgba(212,175,55,0.6);
-  box-shadow: 0 0 0 1px rgba(212,175,55,0.15), 0 20px 50px rgba(0,0,0,0.4);
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.subtitle {
+  color: #94a3b8;
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 15px;
+}
+.features {
+  list-style: none;
+  margin-bottom: 28px;
+}
+.features li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #e2e8f0;
+}
+.features li::before {
+  content: "✓";
+  color: #22c55e;
+  font-weight: bold;
+  font-size: 18px;
+}
+.plan-btn {
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.plan-btn:hover {
+  border-color: #6366f1;
+  background: rgba(99,102,241,0.1);
+  transform: translateY(-1px);
+}
+.plan-btn.annual {
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  position: relative;
+}
+.plan-btn.annual:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.4);
 }
 .badge {
   position: absolute;
   top: -10px;
-  right: 14px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-2));
-  color: #1a1200;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
-}
-.tier-name { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
-.price { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
-.desc { color: var(--muted); font-size: 14px; margin: 10px 0 18px; line-height: 1.5; }
-.btn {
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-  padding: 12px 16px;
-  border-radius: 12px;
+  right: 16px;
+  background: #22c55e;
+  color: #fff;
+  font-size: 11px;
   font-weight: 700;
-  font-size: 14px;
-  text-decoration: none;
-  cursor: pointer;
-  border: 1px solid var(--border);
-  background: #1b284a;
-  color: var(--text);
-  transition: all .2s ease;
-}
-.btn:hover { background: #22325a; }
-.btn.primary {
-  background: linear-gradient(90deg, var(--gold), var(--gold-2));
-  color: #1a1200;
-  border-color: transparent;
-}
-.btn.primary:hover { filter: brightness(1.05); }
-
-.custom {
-  background: var(--bg-2);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 22px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.custom label { font-size: 13px; color: var(--muted); margin-right: 4px; }
-.custom-input {
-  position: relative;
-  flex: 1;
-  min-width: 160px;
-}
-.custom-input span {
-  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-  color: var(--muted); font-weight: 600;
-}
-.custom input {
-  width: 100%;
-  padding: 12px 14px 12px 28px;
+  padding: 4px 10px;
   border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #0e1831;
-  color: var(--text);
-  font-size: 16px;
-  font-weight: 600;
-  outline: none;
+  letter-spacing: 0.5px;
 }
-.custom input:focus { border-color: var(--gold); }
-
-footer { text-align: center; margin-top: 36px; color: var(--muted); font-size: 13px; }
-footer a { color: var(--gold); text-decoration: none; }
+.plan-info { text-align: left; }
+.plan-name { font-size: 16px; font-weight: 600; }
+.plan-sub { font-size: 12px; color: #cbd5e1; margin-top: 2px; }
+.plan-price { font-size: 20px; font-weight: 700; }
+.cancel-note {
+  text-align: center;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+.cancel-note a { color: #818cf8; text-decoration: none; }
+.active-banner {
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.active-banner strong { color: #22c55e; }
+.cancel-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.1);
+  color: #fca5a5;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.cancel-btn:hover { background: rgba(239,68,68,0.2); }
+.hidden { display: none; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <span class="eyebrow">Give a Gift</span>
-    <h1>Support <span class="accent">The Word 365</span></h1>
-    <p class="sub">Your generosity keeps daily scripture, devotionals, and new features growing.</p>
-  </header>
-
-  <section>
-    <div class="grid">
-      <div class="card"><div class="tier-name">Gift</div><div class="price">$10</div><p class="desc">A one-time blessing.</p>
-        <a class="btn" href="https://www.paypal.com/donate?hosted_button_id=REPLACE_BUTTON_ID&amount=10">Give $10</a></div>
-      <div class="card"><div class="tier-name">Gift</div><div class="price">$25</div><p class="desc">Support a week of hosting.</p>
-        <a class="btn" href="https://www.paypal.com/donate?hosted_button_id=REPLACE_BUTTON_ID&amount=25">Give $25</a></div>
-      <div class="card featured"><span class="badge">Popular</span><div class="tier-name">Gift</div><div class="price">$50</div><p class="desc">Fund a new devotional series.</p>
-        <a class="btn primary" href="https://www.paypal.com/donate?hosted_button_id=REPLACE_BUTTON_ID&amount=50">Give $50</a></div>
-      <div class="card"><div class="tier-name">Gift</div><div class="price">$100</div><p class="desc">Bless the ministry generously.</p>
-        <a class="btn" href="https://www.paypal.com/donate?hosted_button_id=REPLACE_BUTTON_ID&amount=100">Give $100</a></div>
+<div class="card">
+  <div id="activeView" class="hidden">
+    <h1>You're Pro!</h1>
+    <p class="subtitle">Thanks for supporting us.</p>
+    <div class="active-banner">
+      Current plan: <strong id="currentPlan">—</strong><br/>
+      <span id="renewInfo" style="font-size:12px;color:#94a3b8;"></span>
     </div>
+    <button class="cancel-btn" onclick="cancelSubscription()">Cancel Subscription</button>
+  </div>
 
-    <div class="custom">
-      <label for="amount">Custom amount</label>
-      <div class="custom-input">
-        <span>$</span>
-        <input id="amount" type="number" min="1" step="1" placeholder="Enter amount" />
+  <div id="plansView">
+    <h1>Go Pro</h1>
+    <p class="subtitle">Unlock everything. Cancel anytime.</p>
+    <ul class="features">
+      <li>Unlimited access to all features</li>
+      <li>Priority support</li>
+      <li>No ads</li>
+      <li>Early access to new updates</li>
+    </ul>
+
+    <button class="plan-btn" onclick="subscribe('monthly')">
+      <div class="plan-info">
+        <div class="plan-name">Monthly</div>
+        <div class="plan-sub">Billed every month</div>
       </div>
-      <a id="customBtn" class="btn primary" style="width:auto;padding:12px 22px" href="#">Give now</a>
-    </div>
-  </section>
+      <div class="plan-price">$6.99</div>
+    </button>
 
-  <footer>
-    <p>Questions? <a href="mailto:support@theword365app.com">support@theword365app.com</a></p>
-    <p style="margin-top:8px">© <span id="yr"></span> The Word 365</p>
-  </footer>
+    <button class="plan-btn annual" onclick="subscribe('annual')">
+      <span class="badge">SAVE 40%</span>
+      <div class="plan-info">
+        <div class="plan-name">Annual</div>
+        <div class="plan-sub">$4.17/mo · billed yearly</div>
+      </div>
+      <div class="plan-price">$49.99</div>
+    </button>
+
+    <p class="cancel-note">
+      Subscriptions auto-renew. Cancel anytime from this page.<br/>
+      By subscribing, you agree to our <a href="#">Terms</a>.
+    </p>
+  </div>
 </div>
 
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
+const KEY = 'pro_subscription';
 
-const amount = document.getElementById('amount');
-const customBtn = document.getElementById('customBtn');
-function updateCustom() {
-  const v = parseFloat(amount.value);
-  if (!v || v < 1) { customBtn.href = '#'; return; }
-  customBtn.href = 'https://www.paypal.com/donate?hosted_button_id=REPLACE_BUTTON_ID&amount=' + encodeURIComponent(v);
+function loadSub() {
+  try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; }
 }
-amount.addEventListener('input', updateCustom);
+
+function render() {
+  const sub = loadSub();
+  const active = document.getElementById('activeView');
+  const plans = document.getElementById('plansView');
+  if (sub && sub.status === 'active') {
+    active.classList.remove('hidden');
+    plans.classList.add('hidden');
+    document.getElementById('currentPlan').textContent =
+      sub.plan === 'annual' ? 'Annual ($49.99/yr)' : 'Monthly ($6.99/mo)';
+    const renew = new Date(sub.renewsAt).toLocaleDateString();
+    document.getElementById('renewInfo').textContent = 'Renews on ' + renew;
+  } else {
+    active.classList.add('hidden');
+    plans.classList.remove('hidden');
+  }
+}
+
+function subscribe(plan) {
+  const now = new Date();
+  const renewsAt = new Date(now);
+  if (plan === 'annual') renewsAt.setFullYear(now.getFullYear() + 1);
+  else renewsAt.setMonth(now.getMonth() + 1);
+  localStorage.setItem(KEY, JSON.stringify({
+    plan,
+    status: 'active',
+    startedAt: now.toISOString(),
+    renewsAt: renewsAt.toISOString(),
+  }));
+  alert('Welcome to Pro! Your ' + plan + ' plan is now active.');
+  render();
+}
+
+function cancelSubscription() {
+  if (!confirm('Cancel your Pro subscription? You will lose access immediately.')) return;
+  localStorage.removeItem(KEY);
+  alert('Your subscription has been cancelled.');
+  render();
+}
+
+render();
 </script>
 </body>
 </html>
