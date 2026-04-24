@@ -6,7 +6,6 @@
 <title>The Word 365 Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-  
 :root{--blue:#3a7bd5;--blue-light:#eef4fc;--blue-mid:#5a8bd8;--cream:#fdf6ee;--cream-mid:#f2e4cc;--cream-dark:#e8d0aa;--gold:#c9963a;--gold-light:#e8b86d;--gold-pale:#f5e0bb;--amber:#e07b2a;--brown:#2a1810;--brown-mid:#5a3828;--brown-soft:#8a6858;--white:#fff;--font-size:16px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);background:var(--cream);color:var(--brown);min-height:100vh;overflow-x:hidden}
@@ -100,8 +99,8 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 .bnav-lbl{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.07em}
 .toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brown);border-radius:8px;padding:0.7rem 1.2rem;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);opacity:0;transition:all 0.3s ease;z-index:600;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.manage-btn{background:var(--blue);border:none;border-radius:8px;padding:0.8rem 1.2rem;color:var(--white);font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;width:100%;margin-top:1rem;font-weight:700;transition:opacity 0.2s}
-.manage-btn:hover{opacity:0.88}
+.cancel-btn{background:var(--amber);border:none;border-radius:8px;padding:0.8rem 1.2rem;color:var(--white);font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;width:100%;margin-top:1rem;font-weight:700}
+.cancel-btn:hover{opacity:0.88}
 .account-info{background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:0.8rem;display:flex;justify-content:space-between;align-items:center}
 .account-label{font-family:'Cinzel',serif;font-size:0.75rem;color:var(--brown);letter-spacing:0.07em}
 .account-val{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--brown-soft);font-style:italic}
@@ -234,8 +233,8 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 <span class="account-val" style="color:var(--gold);font-weight:600;">Active — 7-Day Free Trial</span>
 </div>
 <div class="account-info">
-<span class="account-label">CURRENT PLAN</span>
-<span class="account-val" id="current-plan">Monthly — $6.99/month</span>
+<span class="account-label">PLAN</span>
+<span class="account-val">$4.99/month after trial</span>
 </div>
 <div class="account-info">
 <span class="account-label">TRIAL ENDS</span>
@@ -245,15 +244,8 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 <span class="account-label">FEATURES UNLOCKED</span>
 <span class="account-val">81 African Roots + 10 Hidden Scrolls</span>
 </div>
-
-<div style="background:var(--blue-light);border:1px solid rgba(58,123,213,0.2);border-radius:10px;padding:1rem;margin:1.5rem 0;">
-<div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--blue);letter-spacing:0.1em;margin-bottom:0.6rem;">💡 ANNUAL PLAN AVAILABLE</div>
-<div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown);margin-bottom:0.4rem;font-weight:600;">Save 40% with annual billing</div>
-<div style="font-family:'EB Garamond',serif;font-size:0.82rem;color:var(--brown-soft);line-height:1.7;"><strong>Monthly:</strong> $6.99/month = $83.88/year<br><strong>Annual:</strong> $49.99/year <span style="color:var(--gold);font-weight:600;">(save $33.89)</span></div>
-</div>
-
-<button class="manage-btn" onclick="openStripePortal()">MANAGE SUBSCRIPTION</button>
-<div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-top:0.8rem;line-height:1.6;">Cancel anytime, switch plans, or update payment method through Stripe's secure portal.</div>
+<button class="cancel-btn" onclick="cancelSub()">CANCEL SUBSCRIPTION</button>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-top:0.8rem;">Cancel anytime during your trial at no charge. After your trial ends, you will be billed $4.99/month until you cancel.</div>
 </div>
 </main>
 
@@ -310,9 +302,6 @@ hermas:{title:'Shepherd of Hermas',verses:[{n:1,t:'The master who reared me sold
 barnabas:{title:'Epistle of Barnabas',verses:[{n:1,t:'Hail, sons and daughters, in the name of the Lord that loved us, in peace.'},{n:2,t:'I see in you the Spirit poured out from the rich Lord of love.'},{n:3,t:'The Lord endured to deliver up His flesh that we might be sanctified.'}]},
 peter_apoc:{title:'Apocalypse of Peter',verses:[{n:1,t:'As He sat upon the Mount of Olives, we besought Him: Declare unto us the signs of Thy coming.'},{n:2,t:'He answered: Take heed that no man deceive you. Many shall come in my name.'},{n:3,t:'I saw a place very bright, and the souls of the righteous rejoiced.'}]}
 };
-
-// Stripe Customer Portal Configuration
-const STRIPE_PORTAL_URL = 'https://billing.stripe.com/p/login/fZu00laka2yHduf9xw8so00';
 
 function initDates(){
 const now=new Date();
@@ -403,18 +392,10 @@ function closeReader(){
 document.getElementById('reader').classList.remove('open');
 }
 
-function openStripePortal(){
-// Check if portal URL is configured
-if(STRIPE_PORTAL_URL.includes('YOUR_PORTAL_ID_HERE')){
-showToast('⚠️ Stripe portal not configured yet');
-console.error('Please update STRIPE_PORTAL_URL in the code with your actual Stripe Customer Portal URL');
-return;
-}
-  
-// Confirm with user before redirecting
-if(confirm('This will open Stripe\'s secure billing portal where you can:\n\n• Cancel your subscription\n• Switch between Monthly and Annual plans\n• Update payment method\n• View billing history\n\nContinue?')){
-// Redirect to Stripe Customer Portal
-window.location.href = STRIPE_PORTAL_URL;
+function cancelSub(){
+if(confirm('Are you sure you want to cancel your subscription? You will lose access to all Pro features.')){
+showToast('✅ Subscription cancelled. Access until trial ends.');
+setTimeout(()=>showToast('Thank you for trying The Word 365 Pro.'),2500);
 }
 }
 
@@ -437,4 +418,3 @@ document.getElementById('theme-selector').classList.add('visible');
 </script>
 </body>
 </html>
-
