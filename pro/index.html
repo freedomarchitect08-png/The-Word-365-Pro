@@ -22,4 +22,400 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 #theme-selector.visible{display:flex}
 .theme-sel-title{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--blue);text-align:center;margin-bottom:0.4rem;letter-spacing:0.1em}
 .theme-sel-sub{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-bottom:2rem}
-.theme-cards{display:flex;gap:1rem;width:100%;m
+.theme-cards{display:flex;gap:1rem;width:100%;max-width:360px}
+.theme-card{flex:1;border-radius:14px;overflow:hidden;border:2px solid transparent;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.theme-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+.theme-card-header{padding:1rem;text-align:center}
+.theme-card-name{font-family:'Cinzel',serif;font-size:0.9rem;letter-spacing:0.1em}
+.theme-card-desc{font-size:0.75rem;margin-top:0.25rem;opacity:0.7;font-style:italic}
+.theme-card-dots{display:flex;justify-content:center;gap:6px;padding:0.75rem}
+.theme-dot{width:16px;height:16px;border-radius:50%}
+#app{display:none;flex-direction:column;min-height:100vh}
+#app.visible{display:flex}
+.topnav{background:linear-gradient(135deg,#4a8be8 0%,#3a7bd5 50%,#2f68b8 100%);padding:0.85rem 1.1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(58,123,213,0.2)}
+.nav-logo{font-family:'Cinzel',serif;font-size:1.05rem;color:var(--white);letter-spacing:0.12em;display:flex;align-items:center;gap:0.4rem}
+.nav-pro-badge{background:rgba(201,150,58,0.3);color:var(--gold-light);font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.15em;padding:0.15rem 0.5rem;border-radius:3px;border:1px solid rgba(201,150,58,0.4)}
+.nav-icons{display:flex;gap:0.9rem;align-items:center}
+.nav-icon{background:none;border:none;color:rgba(255,255,255,0.8);font-size:1.1rem;cursor:pointer;transition:color 0.2s}
+.nav-icon:hover{color:var(--gold-light)}
+.nav-gold-stripe{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));flex-shrink:0}
+.tabs{display:flex;overflow-x:auto;background:var(--white);border-bottom:1px solid var(--cream-dark);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:0.75rem 0.9rem;font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.1em;color:var(--brown-soft);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.content{flex:1;padding:1.2rem;max-width:680px;margin:0 auto;width:100%}
+.panel{display:none;animation:fadeIn 0.35s ease}
+.panel.active{display:block}
+.sec-header{text-align:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--cream-dark)}
+.sec-eye{font-family:'Cormorant Garamond',serif;font-size:0.75rem;color:var(--blue);letter-spacing:0.3em;text-transform:uppercase}
+.sec-title{font-family:'Cinzel',serif;font-size:clamp(1.3rem,5vw,1.9rem);color:var(--brown);margin-top:0.3rem}
+.sec-desc{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--brown-soft);font-style:italic;margin-top:0.4rem;line-height:1.6}
+.hero{background:linear-gradient(135deg,var(--blue-light) 0%,var(--cream) 100%);border:1px solid rgba(58,123,213,0.15);border-radius:14px;padding:1.3rem;margin-bottom:1.2rem}
+.hero-greeting{font-family:'Cinzel',serif;font-size:0.65rem;color:var(--blue);letter-spacing:0.25em;margin-bottom:0.35rem}
+.hero-day{font-family:'Cinzel',serif;font-size:1.6rem;color:var(--brown);line-height:1.2}
+.hero-day span{color:var(--gold)}
+.hero-verse{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--brown-soft);font-style:italic;margin-top:0.5rem;line-height:1.6}
+.stats-row{display:flex;gap:0.7rem;margin-bottom:1.2rem}
+.stat-card{flex:1;background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;padding:0.8rem;text-align:center}
+.stat-num{font-family:'Cinzel',serif;font-size:1.3rem;color:var(--gold)}
+.stat-lbl{font-family:'Cormorant Garamond',serif;font-size:0.8rem;color:var(--brown-soft);font-style:italic}
+.book-grid{display:flex;flex-direction:column;gap:0.65rem}
+.book-card{background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;padding:0.9rem 1rem;cursor:pointer;transition:all 0.25s;display:flex;align-items:flex-start;gap:0.85rem;position:relative;overflow:hidden}
+.book-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue);opacity:0;transition:opacity 0.25s}
+.book-card:hover{border-color:rgba(58,123,213,0.4);transform:translateX(3px)}
+.book-card:hover::before{opacity:1}
+.book-icon{width:40px;height:40px;border-radius:8px;background:var(--blue-light);border:1px solid rgba(58,123,213,0.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.book-info{flex:1}
+.book-name{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--brown);letter-spacing:0.04em}
+.book-meta{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--brown-soft);font-style:italic;margin-top:0.15rem}
+.book-tag{font-size:0.58rem;font-family:'Cinzel',serif;letter-spacing:0.1em;padding:0.18rem 0.5rem;border-radius:3px;background:var(--blue-light);color:var(--blue);border:1px solid rgba(58,123,213,0.2);margin-top:0.35rem;display:inline-block}
+.book-tag.gold{background:var(--gold-pale);color:var(--brown-mid);border-color:var(--cream-dark)}
+.section-header{margin:2rem 0 1rem}
+.section-title-row{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem}
+.section-icon{font-size:1.1rem}
+.section-name{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.08em}
+.section-count{font-family:'Cinzel',serif;font-size:0.58rem;background:var(--blue-light);color:var(--blue);border:1px solid rgba(58,123,213,0.3);border-radius:12px;padding:0.15rem 0.5rem}
+.section-sub{font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;margin-bottom:0.8rem}
+.exclusive-wrapper{background:linear-gradient(135deg,rgba(201,150,58,0.07),rgba(58,123,213,0.04));border:1px solid rgba(201,150,58,0.3);border-radius:14px;padding:1rem;margin-bottom:0.5rem}
+.exclusive-badge{font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.2em;margin-bottom:0.8rem;text-align:center}
+.divider{display:flex;align-items:center;gap:0.8rem;margin:1.2rem 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--cream-dark),transparent)}
+.divider span{font-family:'Cormorant Garamond',serif;font-size:0.72rem;color:var(--brown-soft);letter-spacing:0.2em;white-space:nowrap}
+.reader-overlay{display:none;position:fixed;inset:0;background:var(--cream);z-index:500;flex-direction:column}
+.reader-overlay.open{display:flex;animation:fadeIn 0.3s ease}
+.reader-header{padding:0.9rem 1.1rem;border-bottom:1px solid var(--cream-dark);display:flex;align-items:center;gap:0.8rem;background:var(--white)}
+.reader-back{background:none;border:none;color:var(--blue);font-size:1.2rem;cursor:pointer}
+.reader-title{font-family:'Cinzel',serif;font-size:0.9rem;color:var(--blue);flex:1;letter-spacing:0.07em}
+.reader-body{flex:1;overflow-y:auto;padding:1.5rem 1.2rem 4rem;max-width:680px;margin:0 auto;width:100%}
+.verse-block{margin-bottom:1.1rem;cursor:pointer;border-radius:6px;padding:0.4rem;transition:background 0.2s}
+.verse-block:hover{background:var(--blue-light)}
+.verse-num{font-family:'Cinzel',serif;font-size:0.62rem;color:var(--gold);letter-spacing:0.08em;margin-right:0.4rem}
+.verse-text{font-family:'EB Garamond',serif;color:var(--brown);line-height:1.8}
+.chapter-heading{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--gold);letter-spacing:0.15em;margin:1.5rem 0 0.75rem;text-transform:uppercase;padding-bottom:0.4rem;border-bottom:1px solid var(--gold-pale)}
+.bottom-nav{background:var(--white);border-top:1px solid var(--cream-dark);display:flex;position:sticky;bottom:0;z-index:100}
+.bnav-item{flex:1;padding:0.65rem 0.4rem 0.55rem;display:flex;flex-direction:column;align-items:center;gap:0.18rem;background:none;border:none;cursor:pointer;color:var(--brown-soft);transition:color 0.2s}
+.bnav-item.active{color:var(--blue)}
+.bnav-icon{font-size:1.05rem}
+.bnav-lbl{font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.07em}
+.toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brown);border-radius:8px;padding:0.7rem 1.2rem;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);opacity:0;transition:all 0.3s ease;z-index:600;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cancel-btn{background:var(--amber);border:none;border-radius:8px;padding:0.8rem 1.2rem;color:var(--white);font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.1em;cursor:pointer;width:100%;margin-top:1rem;font-weight:700}
+.cancel-btn:hover{opacity:0.88}
+.account-info{background:var(--white);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:0.8rem;display:flex;justify-content:space-between;align-items:center}
+.account-label{font-family:'Cinzel',serif;font-size:0.75rem;color:var(--brown);letter-spacing:0.07em}
+.account-val{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--brown-soft);font-style:italic}
+</style>
+</head>
+<body>
+<div id="splash">
+<div class="splash-cross">✝</div>
+<div class="splash-title">THE WORD 365</div>
+<div class="splash-pro">PRO EDITION</div>
+<div class="splash-bar"><div class="splash-fill"></div></div>
+</div>
+
+<div id="theme-selector">
+<div class="theme-sel-title">Welcome to The Word 365 Pro</div>
+<div class="theme-sel-sub">Personalize your sacred journey</div>
+<div class="theme-cards">
+<div class="theme-card" onclick="selectTheme('lumiere')" style="border-color:#c8837a;">
+<div class="theme-card-header" style="background:#c8837a;"><div class="theme-card-name" style="color:#fff;">✨ Lumière</div><div class="theme-card-desc" style="color:rgba(255,255,255,0.75);">Warm · Feminine · Glam</div></div>
+<div class="theme-card-dots" style="background:#fdf6ee;"><div class="theme-dot" style="background:#c8837a;"></div><div class="theme-dot" style="background:#fdf6ee;border:1px solid #e8d0aa;"></div><div class="theme-dot" style="background:#c9963a;"></div><div class="theme-dot" style="background:#e07b2a;"></div></div>
+</div>
+<div class="theme-card" onclick="selectTheme('covenant')" style="border-color:#c9963a;">
+<div class="theme-card-header" style="background:#1e1e1e;"><div class="theme-card-name" style="color:#c9963a;">🔱 Covenant</div><div class="theme-card-desc" style="color:rgba(201,150,58,0.65);">Bold · Strong · Refined</div></div>
+<div class="theme-card-dots" style="background:#141414;"><div class="theme-dot" style="background:#2d2d2d;border:1px solid #444;"></div><div class="theme-dot" style="background:#3a7bd5;"></div><div class="theme-dot" style="background:#c9963a;"></div><div class="theme-dot" style="background:#e07b2a;"></div></div>
+</div>
+</div>
+</div>
+
+<div id="app">
+<nav class="topnav">
+<div class="nav-logo">✦ THE WORD 365 <span class="nav-pro-badge">PRO</span></div>
+<div class="nav-icons">
+<button class="nav-icon" onclick="showPanel('tracker')" title="Tracker">📊</button>
+<button class="nav-icon" onclick="showPanel('account')" title="Account">⚙️</button>
+</div>
+</nav>
+<div class="nav-gold-stripe"></div>
+<div class="tabs">
+<button class="tab active" onclick="showPanel('home')" id="tab-home">🏠 HOME</button>
+<button class="tab" onclick="showPanel('read')" id="tab-read">📖 READ</button>
+<button class="tab" onclick="showPanel('african')" id="tab-african">🌍 AFRICAN ROOTS</button>
+<button class="tab" onclick="showPanel('scrolls')" id="tab-scrolls">📜 HIDDEN SCROLLS</button>
+<button class="tab" onclick="showPanel('tracker')" id="tab-tracker">📊 TRACKER</button>
+<button class="tab" onclick="showPanel('account')" id="tab-account">👑 ACCOUNT</button>
+</div>
+
+<main class="content">
+<div class="panel active" id="panel-home">
+<div class="hero">
+<div class="hero-greeting" id="hero-greeting">✦ GOOD MORNING, BELOVED</div>
+<div class="hero-day">Day <span id="hero-day-num">1</span> of 365</div>
+<div class="hero-verse">"Thy word is a lamp unto my feet, and a light unto my path." — Psalm 119:105</div>
+</div>
+<div class="stats-row">
+<div class="stat-card"><div class="stat-num" id="stat-days">1</div><div class="stat-lbl">Days Read</div></div>
+<div class="stat-card"><div class="stat-num">🔥 1</div><div class="stat-lbl">Streak</div></div>
+<div class="stat-card"><div class="stat-num" id="stat-pct">0%</div><div class="stat-lbl">Complete</div></div>
+</div>
+<div style="background:var(--blue-light);border:1px solid rgba(58,123,213,0.25);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;cursor:pointer;" onclick="showPanel('african')">
+<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">🌍 African Roots — All 81 Books Unlocked</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;">The oldest Bible on earth is African. 81 books. 800 years before the KJV.</div>
+</div>
+<div style="background:var(--blue-light);border:1px solid rgba(58,123,213,0.25);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;cursor:pointer;" onclick="showPanel('scrolls')">
+<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">📜 Hidden Scrolls — 10 Books Unlocked</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;">Ancient texts removed from the Western canon. Now in your hands.</div>
+</div>
+<div class="book-grid">
+<div class="book-card" onclick="openReader('genesis 1','Genesis')"><div class="book-icon">🌅</div><div class="book-info"><div class="book-name">Genesis</div><div class="book-meta">In the beginning God created…</div><div class="book-tag">Old Testament</div></div></div>
+<div class="book-card" onclick="openReader('psalm 23','Psalms')"><div class="book-icon">🎵</div><div class="book-info"><div class="book-name">Psalms</div><div class="book-meta">The LORD is my shepherd…</div><div class="book-tag">Poetry</div></div></div>
+<div class="book-card" onclick="openReader('john 1','John')"><div class="book-icon">✝️</div><div class="book-info"><div class="book-name">John</div><div class="book-meta">In the beginning was the Word…</div><div class="book-tag">Gospel</div></div></div>
+</div>
+</div>
+
+<div class="panel" id="panel-read">
+<div class="sec-header">
+<div class="sec-eye">✦ 66-Book Canon ✦</div>
+<div class="sec-title">Read The Bible</div>
+<div class="sec-desc">Tap any book to read. King James Version.</div>
+</div>
+<div class="book-grid" id="standard-books"></div>
+</div>
+
+<div class="panel" id="panel-african">
+<div class="sec-header">
+<div class="sec-eye">✦ Ethiopian Orthodox Canon ✦</div>
+<div class="sec-title">African Roots</div>
+<div class="sec-desc">The oldest continuous Bible on earth is African. 81 books preserved in Ethiopia since 330 AD.</div>
+</div>
+<div id="african-content"></div>
+</div>
+
+<div class="panel" id="panel-scrolls">
+<div class="sec-header">
+<div class="sec-eye">✦ Apocrypha & Pseudepigrapha ✦</div>
+<div class="sec-title">Hidden Scrolls</div>
+<div class="sec-desc">Ancient texts read by early Christians, removed from the Western canon.</div>
+</div>
+<div class="book-grid" id="scroll-books"></div>
+</div>
+
+<div class="panel" id="panel-tracker">
+<div class="sec-header">
+<div class="sec-eye">✦ Your Journey ✦</div>
+<div class="sec-title">Reading Tracker</div>
+<div class="sec-desc">Every chapter counts. Track your progress.</div>
+</div>
+<div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;text-align:center;">
+<div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">NEW PRO MEMBER</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">Your reading journey starts today. Welcome to The Word 365 Pro! 👑</div>
+</div>
+<div class="stats-row">
+<div class="stat-card"><div class="stat-num" id="tracker-days">1</div><div class="stat-lbl">Days Read</div></div>
+<div class="stat-card"><div class="stat-num" style="color:var(--amber);">🔥 1</div><div class="stat-lbl">Streak</div></div>
+</div>
+</div>
+
+<div class="panel" id="panel-account">
+<div class="sec-header">
+<div class="sec-eye">✦ Account Management ✦</div>
+<div class="sec-title">My Account</div>
+<div class="sec-desc">Manage your Word 365 Pro subscription.</div>
+</div>
+<div style="background:linear-gradient(135deg,var(--blue-light),var(--cream));border:1px solid rgba(58,123,213,0.2);border-radius:16px;padding:1.8rem 1.4rem;text-align:center;margin-bottom:1.5rem;">
+<div style="font-size:2.5rem;margin-bottom:0.6rem;">👑</div>
+<div style="font-family:'Cinzel',serif;font-size:1.4rem;color:var(--blue);margin-bottom:0.4rem;">The Word 365 Pro</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--brown-soft);font-style:italic;line-height:1.6;">Full access to all features.</div>
+</div>
+<div class="account-info">
+<span class="account-label">STATUS</span>
+<span class="account-val" style="color:var(--gold);font-weight:600;">Active — 7-Day Free Trial</span>
+</div>
+<div class="account-info">
+<span class="account-label">PLAN</span>
+<span class="account-val">$4.99/month after trial</span>
+</div>
+<div class="account-info">
+<span class="account-label">TRIAL ENDS</span>
+<span class="account-val" id="trial-end-date">April 31, 2026</span>
+</div>
+<div class="account-info">
+<span class="account-label">FEATURES UNLOCKED</span>
+<span class="account-val">81 African Roots + 10 Hidden Scrolls</span>
+</div>
+<button class="cancel-btn" onclick="cancelSub()">CANCEL SUBSCRIPTION</button>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-top:0.8rem;">Cancel anytime during your trial at no charge. After your trial ends, you will be billed $4.99/month until you cancel.</div>
+</div>
+</main>
+
+<nav class="bottom-nav">
+<button class="bnav-item active" onclick="showPanel('home')" id="bnav-home"><span class="bnav-icon">🏠</span><span class="bnav-lbl">HOME</span></button>
+<button class="bnav-item" onclick="showPanel('read')" id="bnav-read"><span class="bnav-icon">📖</span><span class="bnav-lbl">READ</span></button>
+<button class="bnav-item" onclick="showPanel('african')" id="bnav-african"><span class="bnav-icon">🌍</span><span class="bnav-lbl">AFRICAN</span></button>
+<button class="bnav-item" onclick="showPanel('scrolls')" id="bnav-scrolls"><span class="bnav-icon">📜</span><span class="bnav-lbl">SCROLLS</span></button>
+<button class="bnav-item" onclick="showPanel('account')" id="bnav-account"><span class="bnav-icon">👑</span><span class="bnav-lbl">ACCOUNT</span></button>
+</nav>
+</div>
+
+<div class="reader-overlay" id="reader">
+<div class="reader-header">
+<button class="reader-back" onclick="closeReader()">←</button>
+<div class="reader-title" id="reader-title">Loading…</div>
+</div>
+<div class="reader-body" id="reader-body"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const standardBooks=[
+{icon:'🌅',name:'Genesis',api:'genesis 1'},{icon:'🔥',name:'Exodus',api:'exodus 1'},{icon:'⚖️',name:'Leviticus',api:'leviticus 1'},{icon:'🗺️',name:'Numbers',api:'numbers 1'},{icon:'📋',name:'Deuteronomy',api:'deuteronomy 1'},{icon:'🛡️',name:'Joshua',api:'joshua 1'},{icon:'⚔️',name:'Judges',api:'judges 1'},{icon:'🌾',name:'Ruth',api:'ruth 1'},{icon:'👑',name:'1 Samuel',api:'1 samuel 1'},{icon:'🏰',name:'2 Samuel',api:'2 samuel 1'},{icon:'🏛️',name:'1 Kings',api:'1 kings 1'},{icon:'🔥',name:'2 Kings',api:'2 kings 1'},{icon:'📖',name:'1 Chronicles',api:'1 chronicles 1'},{icon:'📖',name:'2 Chronicles',api:'2 chronicles 1'},{icon:'🏗️',name:'Ezra',api:'ezra 1'},{icon:'🧱',name:'Nehemiah',api:'nehemiah 1'},{icon:'👸',name:'Esther',api:'esther 1'},{icon:'💼',name:'Job',api:'job 1'},{icon:'🎵',name:'Psalms',api:'psalm 23'},{icon:'💡',name:'Proverbs',api:'proverbs 1'},{icon:'🌿',name:'Ecclesiastes',api:'ecclesiastes 1'},{icon:'🌹',name:'Song of Solomon',api:'song of solomon 1'},{icon:'👁️',name:'Isaiah',api:'isaiah 53'},{icon:'💧',name:'Jeremiah',api:'jeremiah 1'},{icon:'😢',name:'Lamentations',api:'lamentations 1'},{icon:'🌊',name:'Ezekiel',api:'ezekiel 1'},{icon:'🦁',name:'Daniel',api:'daniel 1'},{icon:'💔',name:'Hosea',api:'hosea 1'},{icon:'🌾',name:'Joel',api:'joel 1'},{icon:'⚖️',name:'Amos',api:'amos 1'},{icon:'🔮',name:'Obadiah',api:'obadiah 1'},{icon:'🐳',name:'Jonah',api:'jonah 1'},{icon:'🕊️',name:'Micah',api:'micah 6'},{icon:'⚡',name:'Nahum',api:'nahum 1'},{icon:'❓',name:'Habakkuk',api:'habakkuk 1'},{icon:'🌊',name:'Zephaniah',api:'zephaniah 1'},{icon:'🏗️',name:'Haggai',api:'haggai 1'},{icon:'🌟',name:'Zechariah',api:'zechariah 1'},{icon:'✉️',name:'Malachi',api:'malachi 1'},{icon:'✝️',name:'Matthew',api:'matthew 1'},{icon:'🕊️',name:'Mark',api:'mark 1'},{icon:'👨‍⚕️',name:'Luke',api:'luke 1'},{icon:'❤️',name:'John',api:'john 1'},{icon:'🔥',name:'Acts',api:'acts 1'},{icon:'⚡',name:'Romans',api:'romans 8'},{icon:'💒',name:'1 Corinthians',api:'1 corinthians 13'},{icon:'✉️',name:'2 Corinthians',api:'2 corinthians 1'},{icon:'🗽',name:'Galatians',api:'galatians 5'},{icon:'🛡️',name:'Ephesians',api:'ephesians 6'},{icon:'😊',name:'Philippians',api:'philippians 4'},{icon:'🏛️',name:'Colossians',api:'colossians 1'},{icon:'📅',name:'1 Thessalonians',api:'1 thessalonians 4'},{icon:'⏰',name:'2 Thessalonians',api:'2 thessalonians 1'},{icon:'⛪',name:'1 Timothy',api:'1 timothy 1'},{icon:'⛪',name:'2 Timothy',api:'2 timothy 1'},{icon:'🌿',name:'Titus',api:'titus 1'},{icon:'🤝',name:'Philemon',api:'philemon 1'},{icon:'✨',name:'Hebrews',api:'hebrews 11'},{icon:'💪',name:'James',api:'james 1'},{icon:'🌅',name:'1 Peter',api:'1 peter 1'},{icon:'⚠️',name:'2 Peter',api:'2 peter 1'},{icon:'💖',name:'1 John',api:'1 john 4'},{icon:'✉️',name:'2 John',api:'2 john 1'},{icon:'✉️',name:'3 John',api:'3 john 1'},{icon:'⚡',name:'Jude',api:'jude 1'},{icon:'🔮',name:'Revelation',api:'revelation 21'}
+];
+
+const africanBooks=[
+{icon:'🌅',name:'Genesis',api:'genesis 1'},{icon:'🔥',name:'Exodus',api:'exodus 1'},{icon:'⚖️',name:'Leviticus',api:'leviticus 1'},{icon:'🗺️',name:'Numbers',api:'numbers 1'},{icon:'📋',name:'Deuteronomy',api:'deuteronomy 1'},{icon:'🛡️',name:'Joshua',api:'joshua 1'},{icon:'⚔️',name:'Judges',api:'judges 1'},{icon:'🌾',name:'Ruth',api:'ruth 1'},{icon:'👑',name:'1 Samuel',api:'1 samuel 1'},{icon:'🏰',name:'2 Samuel',api:'2 samuel 1'},{icon:'🏛️',name:'1 Kings',api:'1 kings 1'},{icon:'🔥',name:'2 Kings',api:'2 kings 1'},{icon:'📖',name:'1 Chronicles',api:'1 chronicles 1'},{icon:'📖',name:'2 Chronicles',api:'2 chronicles 1'},{icon:'🏗️',name:'Ezra',api:'ezra 1'},{icon:'🧱',name:'Nehemiah',api:'nehemiah 1'},{icon:'👸',name:'Esther',api:'esther 1'},{icon:'💼',name:'Job',api:'job 1'},{icon:'🎵',name:'Psalms',api:'psalm 23'},{icon:'💡',name:'Proverbs',api:'proverbs 1'},{icon:'🌿',name:'Ecclesiastes',api:'ecclesiastes 1'},{icon:'🌹',name:'Song of Songs',api:'song of solomon 1'},{icon:'👁️',name:'Isaiah',api:'isaiah 53'},{icon:'💧',name:'Jeremiah',api:'jeremiah 1'},{icon:'😢',name:'Lamentations',api:'lamentations 1'},{icon:'🌊',name:'Ezekiel',api:'ezekiel 1'},{icon:'🦁',name:'Daniel',api:'daniel 1'},{icon:'💔',name:'Hosea',api:'hosea 1'},{icon:'🌾',name:'Joel',api:'joel 1'},{icon:'⚖️',name:'Amos',api:'amos 1'},{icon:'🔮',name:'Obadiah',api:'obadiah 1'},{icon:'🐳',name:'Jonah',api:'jonah 1'},{icon:'🕊️',name:'Micah',api:'micah 6'},{icon:'⚡',name:'Nahum',api:'nahum 1'},{icon:'❓',name:'Habakkuk',api:'habakkuk 1'},{icon:'🌊',name:'Zephaniah',api:'zephaniah 1'},{icon:'🏗️',name:'Haggai',api:'haggai 1'},{icon:'🌟',name:'Zechariah',api:'zechariah 1'},{icon:'✉️',name:'Malachi',api:'malachi 1'},{icon:'✝️',name:'Matthew',api:'matthew 1'},{icon:'🕊️',name:'Mark',api:'mark 1'},{icon:'👨‍⚕️',name:'Luke',api:'luke 1'},{icon:'❤️',name:'John',api:'john 1'},{icon:'🔥',name:'Acts',api:'acts 1'},{icon:'⚡',name:'Romans',api:'romans 8'},{icon:'💒',name:'1 Corinthians',api:'1 corinthians 13'},{icon:'✉️',name:'2 Corinthians',api:'2 corinthians 1'},{icon:'🗽',name:'Galatians',api:'galatians 5'},{icon:'🛡️',name:'Ephesians',api:'ephesians 6'},{icon:'😊',name:'Philippians',api:'philippians 4'},{icon:'🏛️',name:'Colossians',api:'colossians 1'},{icon:'📅',name:'1 Thessalonians',api:'1 thessalonians 4'},{icon:'⏰',name:'2 Thessalonians',api:'2 thessalonians 1'},{icon:'⛪',name:'1 Timothy',api:'1 timothy 1'},{icon:'⛪',name:'2 Timothy',api:'2 timothy 1'},{icon:'🌿',name:'Titus',api:'titus 1'},{icon:'🤝',name:'Philemon',api:'philemon 1'},{icon:'✨',name:'Hebrews',api:'hebrews 11'},{icon:'💪',name:'James',api:'james 1'},{icon:'🌅',name:'1 Peter',api:'1 peter 1'},{icon:'⚠️',name:'2 Peter',api:'2 peter 1'},{icon:'💖',name:'1 John',api:'1 john 4'},{icon:'✉️',name:'2 John',api:'2 john 1'},{icon:'✉️',name:'3 John',api:'3 john 1'},{icon:'⚡',name:'Jude',api:'jude 1'},{icon:'🔮',name:'Revelation',api:'revelation 21'},
+{icon:'👴',name:'Tobit',api:'tobit 1',tag:'Deuterocanon'},{icon:'⚔️',name:'Judith',api:'judith 1',tag:'Deuterocanon'},{icon:'🏆',name:'1 Maccabees',api:'1 maccabees 1',tag:'Deuterocanon'},{icon:'🌟',name:'2 Maccabees',api:'2 maccabees 1',tag:'Deuterocanon'},{icon:'💡',name:'Wisdom',api:'wisdom 1',tag:'Deuterocanon'},{icon:'📖',name:'Sirach',api:'sirach 1',tag:'Deuterocanon'},{icon:'✉️',name:'Baruch',api:'baruch 1',tag:'Deuterocanon'},
+{icon:'🌌',name:'1 Enoch',special:'enoch'},{icon:'📅',name:'Jubilees',special:'jubilees'},{icon:'⚔️',name:'1 Meqabyan',special:'meq1'},{icon:'🏆',name:'2 Meqabyan',special:'meq2'},{icon:'👑',name:'3 Meqabyan',special:'meq3'},{icon:'✍️',name:'4 Baruch',special:'baruch4'},{icon:'🙏',name:'Sinodos',special:'sinodos'},{icon:'📋',name:'Covenant',special:'covenant'}
+];
+
+const scrollBooks=[
+{icon:'🌌',name:'Book of Enoch',special:'enoch'},{icon:'🌿',name:'Book of Jasher',special:'jasher'},{icon:'👶',name:'Infancy Gospel',special:'infancy'},{icon:'🌸',name:'Gospel of Mary',special:'mary'},{icon:'💬',name:'Gospel of Thomas',special:'thomas'},{icon:'⚖️',name:'Gospel of Nicodemus',special:'nicodemus'},{icon:'🌱',name:'Adam and Eve',special:'adam'},{icon:'🏛️',name:'Shepherd of Hermas',special:'hermas'},{icon:'📝',name:'Epistle of Barnabas',special:'barnabas'},{icon:'🔮',name:'Apocalypse of Peter',special:'peter_apoc'}
+];
+
+const ethiopianContent={
+enoch:{title:'1 Enoch',verses:[{n:1,t:'The words of the blessing of Enoch, wherewith he blessed the elect and righteous.'},{n:2,t:'Enoch saw the vision of the Holy One in the heavens, which the angels showed me.'},{n:3,t:'The Holy Great One will come forth from His dwelling, and appear in the strength of His might.'}]},
+jubilees:{title:'Book of Jubilees',verses:[{n:1,t:'And God spoke to Moses, saying: Come up to Me on the Mount.'},{n:2,t:'Write the complete history of creation, how in six days the Lord finished all His works.'},{n:3,t:'He gave us the Sabbath day, that we should keep it for all ages.'}]},
+meq1:{title:'1 Meqabyan',verses:[{n:1,t:'The Book of Meqabyan tells of three faithful men who refused to worship idols.'},{n:2,t:'They declared: We will not worship the work of human hands.'},{n:3,t:'God honored their faithfulness with miraculous deliverance.'}]},
+meq2:{title:'2 Meqabyan',verses:[{n:1,t:'The Second Book continues the Ethiopian narratives of faith under persecution.'},{n:2,t:'Those who die in the Lord do not truly perish, for God will raise them up.'},{n:3,t:'Their faithfulness will be their eternal crown in His presence.'}]},
+meq3:{title:'3 Meqabyan',verses:[{n:1,t:'The Third Book completes the sacred trilogy of Ethiopian chronicles.'},{n:2,t:'It emphasizes divine faithfulness and the ultimate triumph of those who trust in God.'},{n:3,t:'These texts form part of the liturgical heart of the Ethiopian church calendar.'}]},
+baruch4:{title:'4 Baruch',verses:[{n:1,t:'God spoke to Jeremiah: Arise, depart from this city, for I am about to destroy it.'},{n:2,t:'Jeremiah said to Baruch: Take the keys of the temple and commit them to the earth.'},{n:3,t:'Abimelech the Ethiopian was preserved through a miraculous sleep of sixty-six years.'}]},
+sinodos:{title:'Sinodos',verses:[{n:1,t:'The Sinodos contains the apostolic canons and church order of the Ethiopian Church.'},{n:2,t:'Rest on the Sabbath and assemble on the first day of the week, for this is the Day of the Lord.'},{n:3,t:'Fast on Wednesday and Friday. Break your fast joyfully on Sunday.'}]},
+covenant:{title:'Books of the Covenant',verses:[{n:1,t:'The Books of the Covenant govern Ethiopian Orthodox Church practice and sacramental life.'},{n:2,t:'When you gather on the first day, break the bread and give thanks, confessing your sins.'},{n:3,t:'Baptize in the name of the Father, and of the Son, and of the Holy Spirit.'}]},
+jasher:{title:'Book of Jasher',verses:[{n:1,t:'And God said, Let us make man in our image, and God created man in his own image.'},{n:2,t:'And God formed man from the ground, and blew into his nostrils the breath of life.'},{n:3,t:'And the Lord caused a deep sleep to fall upon Adam, and took from him one rib and formed Woman.'}]},
+infancy:{title:'Infancy Gospel',verses:[{n:1,t:'When Jesus was five years old, He was playing by a brook and fashioned twelve sparrows from clay.'},{n:2,t:'And it was the Sabbath when He did this.'},{n:3,t:'But Jesus clapped His hands and cried to the sparrows: Go! And they took flight and went away chirping.'}]},
+mary:{title:'Gospel of Mary',verses:[{n:1,t:'Then Mary stood up and said: Do not weep and do not grieve, for His grace will be with you.'},{n:2,t:'Peter said: Tell us the words of the Savior which you remember.'},{n:3,t:'Mary said: I saw the Lord in a vision and He answered me: Blessed are you who did not waver.'}]},
+thomas:{title:'Gospel of Thomas',verses:[{n:1,t:'These are the secret sayings that the living Jesus spoke and Didymos Judas Thomas recorded.'},{n:2,t:'Jesus said: Those who seek should not stop seeking until they find.'},{n:3,t:'Jesus said: The kingdom is inside you and it is outside you.'}]},
+nicodemus:{title:'Gospel of Nicodemus',verses:[{n:1,t:'The Jews went to Pilate accusing Jesus, saying: We know this man says he is the Son of God and a king.'},{n:2,t:'Pilate entered the judgment hall and called Jesus, saying: Art thou the king of the Jews?'},{n:3,t:'Jesus answered: My kingdom is not of this world.'}]},
+adam:{title:'Adam and Eve',verses:[{n:1,t:'When God drove Adam out of the garden, Adam and Eve went down to a dark cave.'},{n:2,t:'Adam said: We have left a garden of joy for this, only because we broke the commandment.'},{n:3,t:'And God had pity on them and sent His Word to comfort them.'}]},
+hermas:{title:'Shepherd of Hermas',verses:[{n:1,t:'The master who reared me sold me to Rhoda in Rome. After many years, I met her again.'},{n:2,t:'I fell asleep and the Spirit took me up and bore me through a pathless region.'},{n:3,t:'She said: God is angry because your household has sinned against Him.'}]},
+barnabas:{title:'Epistle of Barnabas',verses:[{n:1,t:'Hail, sons and daughters, in the name of the Lord that loved us, in peace.'},{n:2,t:'I see in you the Spirit poured out from the rich Lord of love.'},{n:3,t:'The Lord endured to deliver up His flesh that we might be sanctified.'}]},
+peter_apoc:{title:'Apocalypse of Peter',verses:[{n:1,t:'As He sat upon the Mount of Olives, we besought Him: Declare unto us the signs of Thy coming.'},{n:2,t:'He answered: Take heed that no man deceive you. Many shall come in my name.'},{n:3,t:'I saw a place very bright, and the souls of the righteous rejoiced.'}]}
+};
+
+function initDates(){
+const now=new Date();
+const start=new Date(now.getFullYear(),0,0);
+const diff=now-start;
+const dayOfYear=Math.floor(diff/(1000*60*60*24));
+const pct=Math.floor((dayOfYear/365)*100);
+const hours=now.getHours();
+const greeting=hours<12?'GOOD MORNING, BELOVED':hours<17?'GOOD AFTERNOON, BELOVED':'GOOD EVENING, BELOVED';
+const months=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const dateStr=`✦ ${greeting} · ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+const el=document.getElementById('hero-greeting');if(el)el.textContent=dateStr;
+const dn=document.getElementById('hero-day-num');if(dn)dn.textContent=dayOfYear;
+const sd=document.getElementById('stat-days');if(sd)sd.textContent=dayOfYear;
+const sp=document.getElementById('stat-pct');if(sp)sp.textContent=pct+'%';
+const td=document.getElementById('tracker-days');if(td)td.textContent=dayOfYear;
+const trialEnd=new Date(now);
+trialEnd.setDate(trialEnd.getDate()+7);
+const te=document.getElementById('trial-end-date');
+if(te)te.textContent=`${months[trialEnd.getMonth()]} ${trialEnd.getDate()}, ${trialEnd.getFullYear()}`;
+}
+
+function selectTheme(theme){
+document.getElementById('theme-selector').classList.remove('visible');
+document.getElementById('app').classList.add('visible');
+initDates();
+buildBooks();
+}
+
+function showPanel(name){
+document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+const panel=document.getElementById('panel-'+name);if(panel)panel.classList.add('active');
+const tab=document.getElementById('tab-'+name);if(tab)tab.classList.add('active');
+const bnav=document.getElementById('bnav-'+name);if(bnav)bnav.classList.add('active');
+window.scrollTo(0,0);
+}
+
+function buildBooks(){
+const sb=document.getElementById('standard-books');
+if(sb)sb.innerHTML=standardBooks.map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('');
+const ab=document.getElementById('african-content');
+if(ab){
+let html='<div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;"><div style="font-family:Cinzel,serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">ALL 81 BOOKS UNLOCKED</div><div style="font-family:Cormorant Garamond,serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">The complete Ethiopian Orthodox Canon — 66 standard books + 7 Deuterocanon + 8 exclusive to Ethiopia. Tap any book to read.</div></div>';
+html+='<div class="section-header"><div class="section-title-row"><span class="section-icon">📚</span><span class="section-name">THE 66-BOOK STANDARD CANON</span></div><div class="section-sub">Also found in Western Bibles — preserved in Ethiopia for 1,600 years.</div></div>';
+html+='<div class="book-grid">'+africanBooks.slice(0,66).map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('')+'</div>';
+html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">📖</span><span class="section-name">THE DEUTEROCANON — 7 BOOKS</span></div><div class="section-sub">Removed from Protestant Bibles in 1827. Still sacred to Ethiopia, Catholics, and Eastern Orthodox.</div></div>';
+html+='<div class="book-grid">'+africanBooks.slice(66,73).map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div><div class="book-tag gold">Deuterocanon</div></div></div>`).join('')+'</div>';
+html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">🌟</span><span class="section-name">EXCLUSIVELY ETHIOPIAN — 8 BOOKS</span></div><div class="section-sub">Found in NO other Bible on earth. Only in the Ethiopian Orthodox Canon.</div></div>';
+html+='<div class="exclusive-wrapper"><div class="exclusive-badge">✦ PRO EXCLUSIVE ✦</div><div class="book-grid">'+africanBooks.slice(73).map(b=>`<div class="book-card" onclick="${b.special?`openSpecial('${b.special}','${b.name}')`:`openReader('${b.api}','${b.name}')`}"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('')+'</div></div>';
+ab.innerHTML=html;
+}
+const scr=document.getElementById('scroll-books');
+if(scr)scr.innerHTML=scrollBooks.map(b=>`<div class="book-card" onclick="openSpecial('${b.special}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('');
+}
+
+async function openReader(ref,title){
+document.getElementById('reader-title').textContent=title+' · Loading…';
+const body=document.getElementById('reader-body');
+body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);font-style:italic;">Loading scripture…</p>';
+document.getElementById('reader').classList.add('open');
+try{
+const url='https://bible-api.com/'+encodeURIComponent(ref)+'?translation=kjv';
+const res=await fetch(url);
+const data=await res.json();
+if(data.verses&&data.verses.length){
+document.getElementById('reader-title').textContent=data.reference||title;
+body.innerHTML=data.verses.map(v=>`<div class="verse-block"><span class="verse-num">${v.verse}</span><span class="verse-text">${v.text.trim()}</span></div>`).join('');
+}else{
+body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Scripture not available.</p>';
+}
+}catch(e){
+body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Connection error.</p>';
+}
+}
+
+function openSpecial(key,title){
+const content=ethiopianContent[key];
+if(!content){showToast('📜 Loading…');return;}
+document.getElementById('reader-title').textContent=content.title;
+const body=document.getElementById('reader-body');
+body.innerHTML=content.verses.map(v=>`<div class="verse-block"><span class="verse-num">${v.n}</span><span class="verse-text">${v.t}</span></div>`).join('');
+document.getElementById('reader').classList.add('open');
+}
+
+function closeReader(){
+document.getElementById('reader').classList.remove('open');
+}
+
+function cancelSub(){
+if(confirm('Are you sure you want to cancel your subscription? You will lose access to all Pro features.')){
+showToast('✅ Subscription cancelled. Access until trial ends.');
+setTimeout(()=>showToast('Thank you for trying The Word 365 Pro.'),2500);
+}
+}
+
+function showToast(msg){
+const t=document.getElementById('toast');
+t.textContent=msg;
+t.classList.add('show');
+setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+window.addEventListener('load',()=>{
+setTimeout(()=>{
+document.getElementById('splash').style.opacity='0';
+setTimeout(()=>{
+document.getElementById('splash').style.display='none';
+document.getElementById('theme-selector').classList.add('visible');
+},800);
+},2400);
+});
+</script>
+</body>
+</html>
+👆 Copy everything from <!DOCTYPE html> all the way to </html> and paste into GitHub. Then click Commit changes. ✅
