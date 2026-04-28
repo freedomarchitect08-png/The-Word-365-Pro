@@ -67,14 +67,14 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 .book-icon{width:40px;height:40px;border-radius:8px;background:var(--blue-light);border:1px solid rgba(58,123,213,0.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
 .book-info{flex:1}
 .book-name{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--brown);letter-spacing:0.04em}
-.book-meta{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--brown-soft);font-style:italic;margin-top:0.15rem}
+.book-meta{font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--brown-soft);font-style:italic;margin-top:0.15rem;line-height:1.4}
 .book-tag{font-size:0.58rem;font-family:'Cinzel',serif;letter-spacing:0.1em;padding:0.18rem 0.5rem;border-radius:3px;background:var(--blue-light);color:var(--blue);border:1px solid rgba(58,123,213,0.2);margin-top:0.35rem;display:inline-block}
 .book-tag.gold{background:var(--gold-pale);color:var(--brown-mid);border-color:var(--cream-dark)}
+.book-tag.exclusive{background:rgba(201,150,58,0.12);color:var(--gold);border-color:var(--gold)}
 .section-header{margin:2rem 0 1rem}
 .section-title-row{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.3rem}
 .section-icon{font-size:1.1rem}
 .section-name{font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.08em}
-.section-count{font-family:'Cinzel',serif;font-size:0.58rem;background:var(--blue-light);color:var(--blue);border:1px solid rgba(58,123,213,0.3);border-radius:12px;padding:0.15rem 0.5rem}
 .section-sub{font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;margin-bottom:0.8rem}
 .exclusive-wrapper{background:linear-gradient(135deg,rgba(201,150,58,0.07),rgba(58,123,213,0.04));border:1px solid rgba(201,150,58,0.3);border-radius:14px;padding:1rem;margin-bottom:0.5rem}
 .exclusive-badge{font-family:'Cinzel',serif;font-size:0.58rem;color:var(--gold);letter-spacing:0.2em;margin-bottom:0.8rem;text-align:center}
@@ -91,7 +91,6 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 .verse-block:hover{background:var(--blue-light)}
 .verse-num{font-family:'Cinzel',serif;font-size:0.62rem;color:var(--gold);letter-spacing:0.08em;margin-right:0.4rem}
 .verse-text{font-family:'EB Garamond',serif;color:var(--brown);line-height:1.8}
-.chapter-heading{font-family:'Cinzel',serif;font-size:0.72rem;color:var(--gold);letter-spacing:0.15em;margin:1.5rem 0 0.75rem;text-transform:uppercase;padding-bottom:0.4rem;border-bottom:1px solid var(--gold-pale)}
 .bottom-nav{background:var(--white);border-top:1px solid var(--cream-dark);display:flex;position:sticky;bottom:0;z-index:100}
 .bnav-item{flex:1;padding:0.65rem 0.4rem 0.55rem;display:flex;flex-direction:column;align-items:center;gap:0.18rem;background:none;border:none;cursor:pointer;color:var(--brown-soft);transition:color 0.2s}
 .bnav-item.active{color:var(--blue)}
@@ -107,6 +106,7 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 </style>
 </head>
 <body>
+
 <div id="splash">
 <div class="splash-cross">✝</div>
 <div class="splash-title">THE WORD 365</div>
@@ -148,11 +148,13 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 </div>
 
 <main class="content">
+
+<!-- HOME -->
 <div class="panel active" id="panel-home">
 <div class="hero">
 <div class="hero-greeting" id="hero-greeting">✦ GOOD MORNING, BELOVED</div>
 <div class="hero-day">Day <span id="hero-day-num">1</span> of 365</div>
-<div class="hero-verse">"Thy word is a lamp unto my feet, and a light unto my path." — Psalm 119:105</div>
+<div class="hero-verse">"Thy word is a lamp unto my feet, and a light unto my path." Psalm 119:105</div>
 </div>
 <div class="stats-row">
 <div class="stat-card"><div class="stat-num" id="stat-days">1</div><div class="stat-lbl">Days Read</div></div>
@@ -160,11 +162,11 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 <div class="stat-card"><div class="stat-num" id="stat-pct">0%</div><div class="stat-lbl">Complete</div></div>
 </div>
 <div style="background:var(--blue-light);border:1px solid rgba(58,123,213,0.25);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;cursor:pointer;" onclick="showPanel('african')">
-<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">🌍 African Roots — All 81 Books Unlocked</div>
+<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">🌍 African Roots, All 81 Books Unlocked</div>
 <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;">The oldest Bible on earth is African. 81 books. 800 years before the KJV.</div>
 </div>
 <div style="background:var(--blue-light);border:1px solid rgba(58,123,213,0.25);border-radius:12px;padding:1rem 1.1rem;margin-bottom:1rem;cursor:pointer;" onclick="showPanel('scrolls')">
-<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">📜 Hidden Scrolls — 10 Books Unlocked</div>
+<div style="font-family:'Cinzel',serif;font-size:0.82rem;color:var(--blue);letter-spacing:0.06em;margin-bottom:0.25rem;">📜 Hidden Scrolls, 18 Books Unlocked</div>
 <div style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--brown-soft);font-style:italic;line-height:1.5;">Ancient texts removed from the Western canon. Now in your hands.</div>
 </div>
 <div class="book-grid">
@@ -174,15 +176,17 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 </div>
 </div>
 
+<!-- READ -->
 <div class="panel" id="panel-read">
 <div class="sec-header">
 <div class="sec-eye">✦ 66-Book Canon ✦</div>
 <div class="sec-title">Read The Bible</div>
-<div class="sec-desc">Tap any book to read. King James Version.</div>
+<div class="sec-desc">All 66 books. King James Version. Tap any book to read.</div>
 </div>
 <div class="book-grid" id="standard-books"></div>
 </div>
 
+<!-- AFRICAN ROOTS -->
 <div class="panel" id="panel-african">
 <div class="sec-header">
 <div class="sec-eye">✦ Ethiopian Orthodox Canon ✦</div>
@@ -192,15 +196,17 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 <div id="african-content"></div>
 </div>
 
+<!-- HIDDEN SCROLLS -->
 <div class="panel" id="panel-scrolls">
 <div class="sec-header">
 <div class="sec-eye">✦ Apocrypha & Pseudepigrapha ✦</div>
 <div class="sec-title">Hidden Scrolls</div>
-<div class="sec-desc">Ancient texts read by early Christians, removed from the Western canon.</div>
+<div class="sec-desc">18 ancient texts read by early Christians, removed from the Western canon. Now restored to your hands.</div>
 </div>
 <div class="book-grid" id="scroll-books"></div>
 </div>
 
+<!-- TRACKER -->
 <div class="panel" id="panel-tracker">
 <div class="sec-header">
 <div class="sec-eye">✦ Your Journey ✦</div>
@@ -208,7 +214,7 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 <div class="sec-desc">Every chapter counts. Track your progress.</div>
 </div>
 <div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;text-align:center;">
-<div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">NEW PRO MEMBER</div>
+<div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">WELCOME, PRO MEMBER</div>
 <div style="font-family:'Cormorant Garamond',serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">Your reading journey starts today. Welcome to The Word 365 Pro! 👑</div>
 </div>
 <div class="stats-row">
@@ -217,6 +223,7 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 </div>
 </div>
 
+<!-- ACCOUNT -->
 <div class="panel" id="panel-account">
 <div class="sec-header">
 <div class="sec-eye">✦ Account Management ✦</div>
@@ -230,23 +237,28 @@ body{font-family:'EB Garamond',Georgia,serif;font-size:var(--font-size);backgrou
 </div>
 <div class="account-info">
 <span class="account-label">STATUS</span>
-<span class="account-val" style="color:var(--gold);font-weight:600;">Active — 7-Day Free Trial</span>
+<span class="account-val" style="color:var(--gold);font-weight:600;">Active, 7-Day Free Trial</span>
 </div>
 <div class="account-info">
 <span class="account-label">PLAN</span>
-<span class="account-val">$4.99/month after trial</span>
+<span class="account-val">$6.99/month after trial</span>
+</div>
+<div class="account-info">
+<span class="account-label">YEARLY OPTION</span>
+<span class="account-val">$34.99/year, save 58% 🔥</span>
 </div>
 <div class="account-info">
 <span class="account-label">TRIAL ENDS</span>
-<span class="account-val" id="trial-end-date">April 31, 2026</span>
+<span class="account-val" id="trial-end-date">Loading…</span>
 </div>
 <div class="account-info">
 <span class="account-label">FEATURES UNLOCKED</span>
-<span class="account-val">81 African Roots + 10 Hidden Scrolls</span>
+<span class="account-val">81 African Roots, 18 Hidden Scrolls, Full Bible</span>
 </div>
 <button class="cancel-btn" onclick="cancelSub()">CANCEL SUBSCRIPTION</button>
-<div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-top:0.8rem;">Cancel anytime during your trial at no charge. After your trial ends, you will be billed $4.99/month until you cancel.</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--brown-soft);font-style:italic;text-align:center;margin-top:0.8rem;">Cancel anytime during your trial at no charge. After your trial ends, you will be billed $6.99/month until you cancel.</div>
 </div>
+
 </main>
 
 <nav class="bottom-nav">
@@ -275,32 +287,57 @@ const standardBooks=[
 
 const africanBooks=[
 {icon:'🌅',name:'Genesis',api:'genesis 1'},{icon:'🔥',name:'Exodus',api:'exodus 1'},{icon:'⚖️',name:'Leviticus',api:'leviticus 1'},{icon:'🗺️',name:'Numbers',api:'numbers 1'},{icon:'📋',name:'Deuteronomy',api:'deuteronomy 1'},{icon:'🛡️',name:'Joshua',api:'joshua 1'},{icon:'⚔️',name:'Judges',api:'judges 1'},{icon:'🌾',name:'Ruth',api:'ruth 1'},{icon:'👑',name:'1 Samuel',api:'1 samuel 1'},{icon:'🏰',name:'2 Samuel',api:'2 samuel 1'},{icon:'🏛️',name:'1 Kings',api:'1 kings 1'},{icon:'🔥',name:'2 Kings',api:'2 kings 1'},{icon:'📖',name:'1 Chronicles',api:'1 chronicles 1'},{icon:'📖',name:'2 Chronicles',api:'2 chronicles 1'},{icon:'🏗️',name:'Ezra',api:'ezra 1'},{icon:'🧱',name:'Nehemiah',api:'nehemiah 1'},{icon:'👸',name:'Esther',api:'esther 1'},{icon:'💼',name:'Job',api:'job 1'},{icon:'🎵',name:'Psalms',api:'psalm 23'},{icon:'💡',name:'Proverbs',api:'proverbs 1'},{icon:'🌿',name:'Ecclesiastes',api:'ecclesiastes 1'},{icon:'🌹',name:'Song of Songs',api:'song of solomon 1'},{icon:'👁️',name:'Isaiah',api:'isaiah 53'},{icon:'💧',name:'Jeremiah',api:'jeremiah 1'},{icon:'😢',name:'Lamentations',api:'lamentations 1'},{icon:'🌊',name:'Ezekiel',api:'ezekiel 1'},{icon:'🦁',name:'Daniel',api:'daniel 1'},{icon:'💔',name:'Hosea',api:'hosea 1'},{icon:'🌾',name:'Joel',api:'joel 1'},{icon:'⚖️',name:'Amos',api:'amos 1'},{icon:'🔮',name:'Obadiah',api:'obadiah 1'},{icon:'🐳',name:'Jonah',api:'jonah 1'},{icon:'🕊️',name:'Micah',api:'micah 6'},{icon:'⚡',name:'Nahum',api:'nahum 1'},{icon:'❓',name:'Habakkuk',api:'habakkuk 1'},{icon:'🌊',name:'Zephaniah',api:'zephaniah 1'},{icon:'🏗️',name:'Haggai',api:'haggai 1'},{icon:'🌟',name:'Zechariah',api:'zechariah 1'},{icon:'✉️',name:'Malachi',api:'malachi 1'},{icon:'✝️',name:'Matthew',api:'matthew 1'},{icon:'🕊️',name:'Mark',api:'mark 1'},{icon:'👨‍⚕️',name:'Luke',api:'luke 1'},{icon:'❤️',name:'John',api:'john 1'},{icon:'🔥',name:'Acts',api:'acts 1'},{icon:'⚡',name:'Romans',api:'romans 8'},{icon:'💒',name:'1 Corinthians',api:'1 corinthians 13'},{icon:'✉️',name:'2 Corinthians',api:'2 corinthians 1'},{icon:'🗽',name:'Galatians',api:'galatians 5'},{icon:'🛡️',name:'Ephesians',api:'ephesians 6'},{icon:'😊',name:'Philippians',api:'philippians 4'},{icon:'🏛️',name:'Colossians',api:'colossians 1'},{icon:'📅',name:'1 Thessalonians',api:'1 thessalonians 4'},{icon:'⏰',name:'2 Thessalonians',api:'2 thessalonians 1'},{icon:'⛪',name:'1 Timothy',api:'1 timothy 1'},{icon:'⛪',name:'2 Timothy',api:'2 timothy 1'},{icon:'🌿',name:'Titus',api:'titus 1'},{icon:'🤝',name:'Philemon',api:'philemon 1'},{icon:'✨',name:'Hebrews',api:'hebrews 11'},{icon:'💪',name:'James',api:'james 1'},{icon:'🌅',name:'1 Peter',api:'1 peter 1'},{icon:'⚠️',name:'2 Peter',api:'2 peter 1'},{icon:'💖',name:'1 John',api:'1 john 4'},{icon:'✉️',name:'2 John',api:'2 john 1'},{icon:'✉️',name:'3 John',api:'3 john 1'},{icon:'⚡',name:'Jude',api:'jude 1'},{icon:'🔮',name:'Revelation',api:'revelation 21'},
-{icon:'👴',name:'Tobit',api:'tobit 1',tag:'Deuterocanon'},{icon:'⚔️',name:'Judith',api:'judith 1',tag:'Deuterocanon'},{icon:'🏆',name:'1 Maccabees',api:'1 maccabees 1',tag:'Deuterocanon'},{icon:'🌟',name:'2 Maccabees',api:'2 maccabees 1',tag:'Deuterocanon'},{icon:'💡',name:'Wisdom',api:'wisdom 1',tag:'Deuterocanon'},{icon:'📖',name:'Sirach',api:'sirach 1',tag:'Deuterocanon'},{icon:'✉️',name:'Baruch',api:'baruch 1',tag:'Deuterocanon'},
-{icon:'🌌',name:'1 Enoch',special:'enoch'},{icon:'📅',name:'Jubilees',special:'jubilees'},{icon:'⚔️',name:'1 Meqabyan',special:'meq1'},{icon:'🏆',name:'2 Meqabyan',special:'meq2'},{icon:'👑',name:'3 Meqabyan',special:'meq3'},{icon:'✍️',name:'4 Baruch',special:'baruch4'},{icon:'🙏',name:'Sinodos',special:'sinodos'},{icon:'📋',name:'Covenant',special:'covenant'}
+{icon:'👴',name:'Tobit',api:'tobit 1',tag:'Deuterocanon'},{icon:'⚔️',name:'Judith',api:'judith 1',tag:'Deuterocanon'},{icon:'🏆',name:'1 Maccabees',api:'1 maccabees 1',tag:'Deuterocanon'},{icon:'🌟',name:'2 Maccabees',api:'2 maccabees 1',tag:'Deuterocanon'},{icon:'💡',name:'Wisdom of Solomon',api:'wisdom 1',tag:'Deuterocanon'},{icon:'📖',name:'Sirach',api:'sirach 1',tag:'Deuterocanon'},{icon:'✉️',name:'Baruch',api:'baruch 1',tag:'Deuterocanon'},
+{icon:'🌌',name:'1 Enoch',special:'enoch'},{icon:'📅',name:'Jubilees',special:'jubilees'},{icon:'⚔️',name:'1 Meqabyan',special:'meq1'},{icon:'🏆',name:'2 Meqabyan',special:'meq2'},{icon:'👑',name:'3 Meqabyan',special:'meq3'},{icon:'✍️',name:'4 Baruch',special:'baruch4'},{icon:'🙏',name:'Sinodos',special:'sinodos'},{icon:'📋',name:'Books of the Covenant',special:'covenant'}
 ];
 
+// ── FULL 18-BOOK HIDDEN SCROLLS ──
 const scrollBooks=[
-{icon:'🌌',name:'Book of Enoch',special:'enoch'},{icon:'🌿',name:'Book of Jasher',special:'jasher'},{icon:'👶',name:'Infancy Gospel',special:'infancy'},{icon:'🌸',name:'Gospel of Mary',special:'mary'},{icon:'💬',name:'Gospel of Thomas',special:'thomas'},{icon:'⚖️',name:'Gospel of Nicodemus',special:'nicodemus'},{icon:'🌱',name:'Adam and Eve',special:'adam'},{icon:'🏛️',name:'Shepherd of Hermas',special:'hermas'},{icon:'📝',name:'Epistle of Barnabas',special:'barnabas'},{icon:'🔮',name:'Apocalypse of Peter',special:'peter_apoc'}
+{icon:'🌌',name:'Book of Enoch',meta:'The Watchers, the Nephilim, and visions of heaven. Quoted in Jude.',special:'enoch'},
+{icon:'🌿',name:'Book of Jasher',meta:'Referenced in Joshua 10:13 and 2 Samuel 1:18. Now you can read it.',special:'jasher'},
+{icon:'📅',name:'Book of Jubilees',meta:'Retells Genesis and Exodus with heavenly calendars and divine timelines.',special:'jubilees'},
+{icon:'👶',name:'Infancy Gospel of Thomas',meta:'Untold stories of the childhood of Jesus, ages 5 to 12.',special:'infancy'},
+{icon:'🌸',name:'Gospel of Mary',meta:'Mary Magdalene\'s vision and the hidden teachings of Christ.',special:'mary'},
+{icon:'💬',name:'Gospel of Thomas',meta:'114 secret sayings of Jesus, discovered in Egypt in 1945.',special:'thomas'},
+{icon:'⚖️',name:'Gospel of Nicodemus',meta:'The full trial of Jesus, Pilate\'s account, and the harrowing of hell.',special:'nicodemus'},
+{icon:'📜',name:'Gospel of Philip',meta:'Gnostic teachings on sacraments, marriage, and the nature of Christ.',special:'philip'},
+{icon:'🌱',name:'1st Book of Adam & Eve',meta:'The full story of Adam and Eve after the garden.',special:'adam1'},
+{icon:'🌾',name:'2nd Book of Adam & Eve',meta:'The lives of their children and the first generations of humanity.',special:'adam2'},
+{icon:'🏛️',name:'Shepherd of Hermas',meta:'Visions, commands and parables. Read alongside the NT by early Christians.',special:'hermas'},
+{icon:'📝',name:'Epistle of Barnabas',meta:'Found in the Codex Sinaiticus, the oldest complete Bible manuscript.',special:'barnabas'},
+{icon:'🔮',name:'Apocalypse of Peter',meta:'The first Christian vision of heaven and hell, written in 100 AD.',special:'peter_apoc'},
+{icon:'✉️',name:'Epistle to the Laodiceans',meta:'The lost letter of Paul referenced in Colossians 4:16, now recovered.',special:'laodiceans'},
+{icon:'🙏',name:'Prayer of Manasseh',meta:'The repentance prayer of the most wicked king of Israel.',special:'manasseh'},
+{icon:'🔑',name:'Odes of Solomon',meta:'The oldest known Christian hymn book, filled with poetry and praise.',special:'odes'},
+{icon:'⚡',name:'Apocalypse of Abraham',meta:'Abraham\'s vision of the heavenly throne and the future of humanity.',special:'abr_apoc'},
+{icon:'👑',name:'Testament of Solomon',meta:'How Solomon built the Temple using his ring to command demons.',special:'solomon_test'},
 ];
 
-const ethiopianContent={
-enoch:{title:'1 Enoch',verses:[{n:1,t:'The words of the blessing of Enoch, wherewith he blessed the elect and righteous.'},{n:2,t:'Enoch saw the vision of the Holy One in the heavens, which the angels showed me.'},{n:3,t:'The Holy Great One will come forth from His dwelling, and appear in the strength of His might.'}]},
-jubilees:{title:'Book of Jubilees',verses:[{n:1,t:'And God spoke to Moses, saying: Come up to Me on the Mount.'},{n:2,t:'Write the complete history of creation, how in six days the Lord finished all His works.'},{n:3,t:'He gave us the Sabbath day, that we should keep it for all ages.'}]},
-meq1:{title:'1 Meqabyan',verses:[{n:1,t:'The Book of Meqabyan tells of three faithful men who refused to worship idols.'},{n:2,t:'They declared: We will not worship the work of human hands.'},{n:3,t:'God honored their faithfulness with miraculous deliverance.'}]},
-meq2:{title:'2 Meqabyan',verses:[{n:1,t:'The Second Book continues the Ethiopian narratives of faith under persecution.'},{n:2,t:'Those who die in the Lord do not truly perish, for God will raise them up.'},{n:3,t:'Their faithfulness will be their eternal crown in His presence.'}]},
-meq3:{title:'3 Meqabyan',verses:[{n:1,t:'The Third Book completes the sacred trilogy of Ethiopian chronicles.'},{n:2,t:'It emphasizes divine faithfulness and the ultimate triumph of those who trust in God.'},{n:3,t:'These texts form part of the liturgical heart of the Ethiopian church calendar.'}]},
-baruch4:{title:'4 Baruch',verses:[{n:1,t:'God spoke to Jeremiah: Arise, depart from this city, for I am about to destroy it.'},{n:2,t:'Jeremiah said to Baruch: Take the keys of the temple and commit them to the earth.'},{n:3,t:'Abimelech the Ethiopian was preserved through a miraculous sleep of sixty-six years.'}]},
-sinodos:{title:'Sinodos',verses:[{n:1,t:'The Sinodos contains the apostolic canons and church order of the Ethiopian Church.'},{n:2,t:'Rest on the Sabbath and assemble on the first day of the week, for this is the Day of the Lord.'},{n:3,t:'Fast on Wednesday and Friday. Break your fast joyfully on Sunday.'}]},
-covenant:{title:'Books of the Covenant',verses:[{n:1,t:'The Books of the Covenant govern Ethiopian Orthodox Church practice and sacramental life.'},{n:2,t:'When you gather on the first day, break the bread and give thanks, confessing your sins.'},{n:3,t:'Baptize in the name of the Father, and of the Son, and of the Holy Spirit.'}]},
-jasher:{title:'Book of Jasher',verses:[{n:1,t:'And God said, Let us make man in our image, and God created man in his own image.'},{n:2,t:'And God formed man from the ground, and blew into his nostrils the breath of life.'},{n:3,t:'And the Lord caused a deep sleep to fall upon Adam, and took from him one rib and formed Woman.'}]},
-infancy:{title:'Infancy Gospel',verses:[{n:1,t:'When Jesus was five years old, He was playing by a brook and fashioned twelve sparrows from clay.'},{n:2,t:'And it was the Sabbath when He did this.'},{n:3,t:'But Jesus clapped His hands and cried to the sparrows: Go! And they took flight and went away chirping.'}]},
-mary:{title:'Gospel of Mary',verses:[{n:1,t:'Then Mary stood up and said: Do not weep and do not grieve, for His grace will be with you.'},{n:2,t:'Peter said: Tell us the words of the Savior which you remember.'},{n:3,t:'Mary said: I saw the Lord in a vision and He answered me: Blessed are you who did not waver.'}]},
-thomas:{title:'Gospel of Thomas',verses:[{n:1,t:'These are the secret sayings that the living Jesus spoke and Didymos Judas Thomas recorded.'},{n:2,t:'Jesus said: Those who seek should not stop seeking until they find.'},{n:3,t:'Jesus said: The kingdom is inside you and it is outside you.'}]},
-nicodemus:{title:'Gospel of Nicodemus',verses:[{n:1,t:'The Jews went to Pilate accusing Jesus, saying: We know this man says he is the Son of God and a king.'},{n:2,t:'Pilate entered the judgment hall and called Jesus, saying: Art thou the king of the Jews?'},{n:3,t:'Jesus answered: My kingdom is not of this world.'}]},
-adam:{title:'Adam and Eve',verses:[{n:1,t:'When God drove Adam out of the garden, Adam and Eve went down to a dark cave.'},{n:2,t:'Adam said: We have left a garden of joy for this, only because we broke the commandment.'},{n:3,t:'And God had pity on them and sent His Word to comfort them.'}]},
-hermas:{title:'Shepherd of Hermas',verses:[{n:1,t:'The master who reared me sold me to Rhoda in Rome. After many years, I met her again.'},{n:2,t:'I fell asleep and the Spirit took me up and bore me through a pathless region.'},{n:3,t:'She said: God is angry because your household has sinned against Him.'}]},
-barnabas:{title:'Epistle of Barnabas',verses:[{n:1,t:'Hail, sons and daughters, in the name of the Lord that loved us, in peace.'},{n:2,t:'I see in you the Spirit poured out from the rich Lord of love.'},{n:3,t:'The Lord endured to deliver up His flesh that we might be sanctified.'}]},
-peter_apoc:{title:'Apocalypse of Peter',verses:[{n:1,t:'As He sat upon the Mount of Olives, we besought Him: Declare unto us the signs of Thy coming.'},{n:2,t:'He answered: Take heed that no man deceive you. Many shall come in my name.'},{n:3,t:'I saw a place very bright, and the souls of the righteous rejoiced.'}]}
+const specialContent={
+enoch:{title:'1 Enoch',verses:[{n:1,t:'The words of the blessing of Enoch, wherewith he blessed the elect and righteous, who will be living in the day of tribulation.'},{n:2,t:'Enoch saw the vision of the Holy One in the heavens, which the angels showed me, and from them I heard everything, and from them I understood as I saw.'},{n:3,t:'The Holy Great One will come forth from His dwelling, and the eternal God will tread upon the earth, even on Mount Sinai.'}]},
+jubilees:{title:'Book of Jubilees',verses:[{n:1,t:'And God spoke to Moses, saying: Come up to Me on the Mount, and I will give thee two tables of stone of the law and commandments.'},{n:2,t:'Write the complete history of the creation, how in six days the Lord God finished all His works and all that He created.'},{n:3,t:'He gave us a great sign, the Sabbath day, that we should work six days, but keep Sabbath on the seventh day from all work.'}]},
+meq1:{title:'1 Meqabyan',verses:[{n:1,t:'The Book of Meqabyan tells of three faithful men, Meqabis, Melkias, and Lebanos, who refused to worship idols before the king.'},{n:2,t:'They declared with one voice: We will not bow to the work of human hands, nor to wood, nor to stone.'},{n:3,t:'And God honored their faithfulness, and delivered them, and the king was confounded before them.'}]},
+meq2:{title:'2 Meqabyan',verses:[{n:1,t:'The Second Book continues the Ethiopian narratives of the righteous who suffered under the wicked ruler.'},{n:2,t:'Those who die in the Lord do not truly perish, for God shall raise them up on the last day with great glory.'},{n:3,t:'Their faithfulness shall be their eternal crown and their testimony shall endure forever in His presence.'}]},
+meq3:{title:'3 Meqabyan',verses:[{n:1,t:'The Third Book completes the sacred trilogy unique to the Ethiopian Orthodox Church.'},{n:2,t:'It calls the faithful to remember the deeds of those who came before and to walk in their courage.'},{n:3,t:'For the Lord does not forget the righteous, and their names are written in the book of the living.'}]},
+baruch4:{title:'4 Baruch (Paralipomena)',verses:[{n:1,t:'The Lord spoke to Jeremiah: Arise and go out from this city, thou and Baruch, for I am about to destroy it because of the multitude of sins of its inhabitants.'},{n:2,t:'Jeremiah said to Baruch: Take the keys of the temple and commit them to the earth, saying, Guardian of the earth, receive the keys.'},{n:3,t:'And Abimelech the Ethiopian was preserved through a miraculous sleep of sixty-six years, that he might not see the destruction of Jerusalem.'}]},
+sinodos:{title:'Sinodos',verses:[{n:1,t:'The Sinodos contains the apostolic canons and church orders received by the Ethiopian Church from the earliest disciples.'},{n:2,t:'Let the bishops and presbyters and deacons assemble on the first day of the week, for this is the Day of Resurrection of the Lord.'},{n:3,t:'Fast on the fourth day and on the sixth day. And on Sunday do not fast but break your fast with joy and thanksgiving.'}]},
+covenant:{title:'Books of the Covenant',verses:[{n:1,t:'The Books of the Covenant govern the sacramental life and worship of the Ethiopian Orthodox Church.'},{n:2,t:'When you gather on the first day, break the bread of the Eucharist and give thanks over the cup, confessing your transgressions.'},{n:3,t:'Baptize in the name of the Father, and of the Son, and of the Holy Spirit, in living water when you are able.'}]},
+jasher:{title:'Book of Jasher',verses:[{n:1,t:'And God said, Let us make man in our image, after our likeness, and God created man in His own image.'},{n:2,t:'And the Lord God formed man from the dust of the ground, and breathed into his nostrils the breath of life, and man became a living soul.'},{n:3,t:'And the Lord God said, It is not good for man to be alone. And the Lord caused a deep sleep to fall upon Adam and formed Woman from his rib.'}]},
+infancy:{title:'Infancy Gospel of Thomas',verses:[{n:1,t:'When the child Jesus was five years old, He was playing at the ford of a brook, and He gathered the disturbed water into pools, and made them pure and excellent.'},{n:2,t:'He took soft clay and fashioned from it twelve sparrows. And it was the Sabbath when He did this.'},{n:3,t:'But Jesus clapped His hands together and cried out to the sparrows and said: Be gone! And the sparrows took their flight and went away chirping.'}]},
+mary:{title:'Gospel of Mary',verses:[{n:1,t:'Then Mary stood up, greeted them all, and said to her brethren: Do not weep and do not grieve, nor be irresolute, for His grace will be entirely with you and will protect you.'},{n:2,t:'Peter said to Mary: Sister, we know that the Savior loved you more than the rest of women. Tell us the words of the Savior which you remember.'},{n:3,t:'Mary said: I saw the Lord in a vision and I said to Him: Lord, I saw you today in a vision. He answered: Blessed are you, that you did not waver at the sight of me.'}]},
+thomas:{title:'Gospel of Thomas',verses:[{n:1,t:'These are the secret sayings that the living Jesus spoke and Didymos Judas Thomas recorded.'},{n:2,t:'Jesus said: Those who seek should not stop seeking until they find. When they find, they will be disturbed. When they are disturbed, they will marvel.'},{n:3,t:'Jesus said: The kingdom is inside of you, and it is outside of you. When you come to know yourselves, then you will become known.'}]},
+nicodemus:{title:'Gospel of Nicodemus',verses:[{n:1,t:'The chief priests and scribes who were assembled brought Jesus to Pilate, the governor, saying: This man perverts our nation and forbids giving tribute to Caesar.'},{n:2,t:'And Pilate entered the judgment hall and called Jesus to him privately and said: Art thou the King of the Jews?'},{n:3,t:'Jesus answered him: My kingdom is not of this world. If my kingdom were of this world, then would my servants fight that I should not be delivered.'}]},
+philip:{title:'Gospel of Philip',verses:[{n:1,t:'A Hebrew makes another Hebrew, and such a person is called a proselyte. But a proselyte does not make another proselyte.'},{n:2,t:'The Lord said: Blessed is he who is before he came into being. For he who is, has been and shall be.'},{n:3,t:'Light and darkness, life and death, right and left, are brothers of one another. It is not possible to separate them.'}]},
+adam1:{title:'1st Book of Adam & Eve',verses:[{n:1,t:'When God had driven Adam and Eve out of the garden, they went down into a dark cave not far from the garden, over which the sun did not shine.'},{n:2,t:'Adam said to Eve: Look at thine eyes, and at mine, which afore beheld angels praising, and our hearts felt no envy, nor evil emotions.'},{n:3,t:'But now we do not see as we did, our eyes have become of flesh. They cannot see in like manner as they saw before.'}]},
+adam2:{title:'2nd Book of Adam & Eve',verses:[{n:1,t:'After Adam and Eve had left the garden, the days of their lives were full of toil and grief, yet they trusted in the mercy of God.'},{n:2,t:'Cain rose up against Abel his brother and slew him, and the earth drank of the blood of Abel and trembled.'},{n:3,t:'And God said to Adam: The voice of thy son\'s blood crieth unto Me from the ground. Behold, thou hast brought this evil upon thyself.'}]},
+hermas:{title:'Shepherd of Hermas',verses:[{n:1,t:'He who reared me sold me to one Rhoda in Rome. After many years, I met her again and began to love her as a sister.'},{n:2,t:'Some time after, I saw her bathing in the river Tiber, and I gave her my hand and led her out of the river. And I thought in my heart: I should be happy if I had such a wife.'},{n:3,t:'After this I saw a vision. The heavens were opened, and I saw the woman I desired saluting me from the sky, saying: Hermas, hail!'}]},
+barnabas:{title:'Epistle of Barnabas',verses:[{n:1,t:'Hail, ye sons and daughters, in the name of the Lord that loved us, in peace!'},{n:2,t:'Forasmuch as the righteousness of God is great and rich toward you, I rejoice with exceeding great joy over your blessed and glorious spirits.'},{n:3,t:'The Lord endured to deliver up His flesh to corruption, that we might be sanctified through the remission of sins, which is effected by His blood of sprinkling.'}]},
+peter_apoc:{title:'Apocalypse of Peter',verses:[{n:1,t:'As He sat upon the Mount of Olives, His own disciples came unto Him. And we besought and entreated Him severally and beseeched Him, saying unto Him: Declare unto us what are the signs of Thy coming.'},{n:2,t:'And our Lord answered us saying: Take heed that no man deceive you, and that ye be not doubters and serve other gods. Many shall come in my name.'},{n:3,t:'I saw also another place over against that one, very squalid. And that was the place of punishment. And those who were punished and the angels that punished them had their raiment dark.'}]},
+laodiceans:{title:'Epistle to the Laodiceans',verses:[{n:1,t:'Paul, an apostle not of men and not through man, but through Jesus Christ, to the brethren who are at Laodicea: Grace to you and peace from God the Father and the Lord Jesus Christ.'},{n:2,t:'I give thanks to Christ in all my prayers that you are steadfast in Him and persevering in His works, in expectation of the promise for the day of judgment.'},{n:3,t:'And now I ask you, brethren, to read this epistle to all the brethren who are at Colossae, and that of the Colossians ye likewise read.'}]},
+manasseh:{title:'Prayer of Manasseh',verses:[{n:1,t:'O Lord, Almighty God of our fathers, Abraham, Isaac, and Jacob, and of their righteous seed, who hast made heaven and earth, with all the ornament thereof.'},{n:2,t:'Thou therefore, O Lord, that art the God of the just, hast not appointed repentance to the just, but Thou hast appointed repentance unto me that am a sinner.'},{n:3,t:'I have sinned above the number of the sands of the sea. I bow the knee of mine heart, beseeching Thee of grace. I have sinned, O Lord, I have sinned.'}]},
+odes:{title:'Odes of Solomon',verses:[{n:1,t:'The Lord is on my head like a crown, and I shall not be without Him. They wove for me a crown of truth, and it caused Thy branches to blossom in me.'},{n:2,t:'I put on incorruption through His name, and took off corruption by His grace. Death hath been destroyed before my face.'},{n:3,t:'I am resting in the Spirit of the Lord, and She lifted me up and caused me to stand on my feet in the high place of the Lord.'}]},
+abr_apoc:{title:'Apocalypse of Abraham',verses:[{n:1,t:'On the day I was guarding the gods of my father Terah and the gods of Nahor my brother, when I was testing to find out which god was truly the strong one, I found it.'},{n:2,t:'And a voice came to me saying: Abraham! Abraham! I said: Here am I. And He said: I am the God of your fathers, the God of Abraham. Go away from Terah your father, and go away from the house, that I may show you the things you need.'},{n:3,t:'And He showed me a great light, and in the light a fire, and in the fire a voice, and the voice was the voice of the covenant of God.'}]},
+solomon_test:{title:'Testament of Solomon',verses:[{n:1,t:'When the Temple of God was being built, and the demons were assisting in its construction, I Solomon, son of David, who reigned in Jerusalem, and subdued all the spirits of the air.'},{n:2,t:'An angel gave me a ring from God, with a seal engraved on the stone, and said: Take this seal, O Solomon, and lock up all the demons of the earth.'},{n:3,t:'And I called the demon Ornias and said to him: Tell me what angel frustrates thee? And the demon said: The archangel Uriel.'}]}
 };
 
 function initDates(){
@@ -318,8 +355,7 @@ const dn=document.getElementById('hero-day-num');if(dn)dn.textContent=dayOfYear;
 const sd=document.getElementById('stat-days');if(sd)sd.textContent=dayOfYear;
 const sp=document.getElementById('stat-pct');if(sp)sp.textContent=pct+'%';
 const td=document.getElementById('tracker-days');if(td)td.textContent=dayOfYear;
-const trialEnd=new Date(now);
-trialEnd.setDate(trialEnd.getDate()+7);
+const trialEnd=new Date(now);trialEnd.setDate(trialEnd.getDate()+7);
 const te=document.getElementById('trial-end-date');
 if(te)te.textContent=`${months[trialEnd.getMonth()]} ${trialEnd.getDate()}, ${trialEnd.getFullYear()}`;
 }
@@ -327,8 +363,15 @@ if(te)te.textContent=`${months[trialEnd.getMonth()]} ${trialEnd.getDate()}, ${tr
 function selectTheme(theme){
 document.getElementById('theme-selector').classList.remove('visible');
 document.getElementById('app').classList.add('visible');
-initDates();
-buildBooks();
+if(theme==='covenant'){
+const r=document.documentElement.style;
+r.setProperty('--cream','#2c2c3a');r.setProperty('--cream-mid','#3a3a4e');
+r.setProperty('--cream-dark','#4e4e68');r.setProperty('--white','#363648');
+r.setProperty('--brown','#f0eadc');r.setProperty('--brown-mid','#e8d0aa');
+r.setProperty('--brown-soft','rgba(240,234,220,0.6)');r.setProperty('--blue-light','#2a3455');
+r.setProperty('--blue','#5b8dee');r.setProperty('--gold','#e8b86d');
+}
+initDates();buildBooks();
 }
 
 function showPanel(name){
@@ -344,19 +387,21 @@ window.scrollTo(0,0);
 function buildBooks(){
 const sb=document.getElementById('standard-books');
 if(sb)sb.innerHTML=standardBooks.map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('');
+
 const ab=document.getElementById('african-content');
 if(ab){
-let html='<div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;"><div style="font-family:Cinzel,serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">ALL 81 BOOKS UNLOCKED</div><div style="font-family:Cormorant Garamond,serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">The complete Ethiopian Orthodox Canon — 66 standard books + 7 Deuterocanon + 8 exclusive to Ethiopia. Tap any book to read.</div></div>';
-html+='<div class="section-header"><div class="section-title-row"><span class="section-icon">📚</span><span class="section-name">THE 66-BOOK STANDARD CANON</span></div><div class="section-sub">Also found in Western Bibles — preserved in Ethiopia for 1,600 years.</div></div>';
+let html='<div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;"><div style="font-family:Cinzel,serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">ALL 81 BOOKS UNLOCKED</div><div style="font-family:Cormorant Garamond,serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">The complete Ethiopian Orthodox Canon, 66 standard books, 7 Deuterocanon, 8 exclusive to Ethiopia. Tap any book to read.</div></div>';
+html+='<div class="section-header"><div class="section-title-row"><span class="section-icon">📚</span><span class="section-name">THE 66-BOOK STANDARD CANON</span></div><div class="section-sub">Also found in Western Bibles, preserved in Ethiopia for 1,600 years.</div></div>';
 html+='<div class="book-grid">'+africanBooks.slice(0,66).map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('')+'</div>';
-html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">📖</span><span class="section-name">THE DEUTEROCANON — 7 BOOKS</span></div><div class="section-sub">Removed from Protestant Bibles in 1827. Still sacred to Ethiopia, Catholics, and Eastern Orthodox.</div></div>';
+html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">📖</span><span class="section-name">THE DEUTEROCANON, 7 BOOKS</span></div><div class="section-sub">Removed from Protestant Bibles in 1827. Still sacred to Ethiopia, Catholics, and Eastern Orthodox.</div></div>';
 html+='<div class="book-grid">'+africanBooks.slice(66,73).map(b=>`<div class="book-card" onclick="openReader('${b.api}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div><div class="book-tag gold">Deuterocanon</div></div></div>`).join('')+'</div>';
-html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">🌟</span><span class="section-name">EXCLUSIVELY ETHIOPIAN — 8 BOOKS</span></div><div class="section-sub">Found in NO other Bible on earth. Only in the Ethiopian Orthodox Canon.</div></div>';
+html+='<div class="section-header" style="margin-top:2rem;"><div class="section-title-row"><span class="section-icon">🌟</span><span class="section-name">EXCLUSIVELY ETHIOPIAN, 8 BOOKS</span></div><div class="section-sub">Found in NO other Bible on earth. Only in the Ethiopian Orthodox Canon.</div></div>';
 html+='<div class="exclusive-wrapper"><div class="exclusive-badge">✦ PRO EXCLUSIVE ✦</div><div class="book-grid">'+africanBooks.slice(73).map(b=>`<div class="book-card" onclick="${b.special?`openSpecial('${b.special}','${b.name}')`:`openReader('${b.api}','${b.name}')`}"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('')+'</div></div>';
 ab.innerHTML=html;
 }
+
 const scr=document.getElementById('scroll-books');
-if(scr)scr.innerHTML=scrollBooks.map(b=>`<div class="book-card" onclick="openSpecial('${b.special}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('');
+if(scr)scr.innerHTML=scrollBooks.map(b=>`<div class="book-card" onclick="openSpecial('${b.special}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div><div class="book-meta">${b.meta}</div></div></div>`).join('');
 }
 
 async function openReader(ref,title){
@@ -373,36 +418,30 @@ document.getElementById('reader-title').textContent=data.reference||title;
 body.innerHTML=data.verses.map(v=>`<div class="verse-block"><span class="verse-num">${v.verse}</span><span class="verse-text">${v.text.trim()}</span></div>`).join('');
 }else{
 body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Scripture not available.</p>';
-}
-}catch(e){
-body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Connection error.</p>';
-}
-}
+}}catch(e){
+body.innerHTML='<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Connection error. Please check your internet.</p>';
+}}
 
 function openSpecial(key,title){
-const content=ethiopianContent[key];
-if(!content){showToast('📜 Loading…');return;}
+const content=specialContent[key];
+if(!content){showToast('📜 Content coming soon…');return;}
 document.getElementById('reader-title').textContent=content.title;
 const body=document.getElementById('reader-body');
 body.innerHTML=content.verses.map(v=>`<div class="verse-block"><span class="verse-num">${v.n}</span><span class="verse-text">${v.t}</span></div>`).join('');
 document.getElementById('reader').classList.add('open');
 }
 
-function closeReader(){
-document.getElementById('reader').classList.remove('open');
-}
+function closeReader(){document.getElementById('reader').classList.remove('open');}
 
 function cancelSub(){
 if(confirm('Are you sure you want to cancel your subscription? You will lose access to all Pro features.')){
-showToast('✅ Subscription cancelled. Access until trial ends.');
+showToast('Subscription cancelled. Access until trial ends.');
 setTimeout(()=>showToast('Thank you for trying The Word 365 Pro.'),2500);
-}
-}
+}}
 
 function showToast(msg){
 const t=document.getElementById('toast');
-t.textContent=msg;
-t.classList.add('show');
+t.textContent=msg;t.classList.add('show');
 setTimeout(()=>t.classList.remove('show'),2800);
 }
 
