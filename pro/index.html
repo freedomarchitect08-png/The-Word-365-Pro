@@ -399,7 +399,6 @@ html+='<div class="section-header" style="margin-top:2rem;"><div class="section-
 html+='<div class="exclusive-wrapper"><div class="exclusive-badge">✦ PRO EXCLUSIVE ✦</div><div class="book-grid">'+africanBooks.slice(73).map(b=>`<div class="book-card" onclick="${b.special?`openSpecial('${b.special}','${b.name}')`:`openReader('${b.api}','${b.name}')`}"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`).join('')+'</div></div>';
 ab.innerHTML=html;
 }
-
 const scr=document.getElementById('scroll-books');
 if(scr)scr.innerHTML=scrollBooks.map(b=>`<div class="book-card" onclick="openSpecial('${b.special}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div><div class="book-meta">${b.meta}</div></div></div>`).join('');
 }
