@@ -438,6 +438,8 @@ covenant:{title:'Books of the Covenant',verses:[{n:1,t:'The Books of the Covenan
 ══════════════════════════════════════════════ */
 let currentRef = '';
 let currentTitle = '';
+let currentBook = '';
+let currentChapter = 1;
 let isBibleBook = false;
 let synth = window.speechSynthesis;
 let utterances = [];
@@ -494,108 +496,240 @@ function showPanel(name){
 }
 
 /* ══════════════════════════════════════════════
-   BUILD BOOKS
+   CHAPTER COUNTS (max chapters per book)
 ══════════════════════════════════════════════ */
-function buildBooks(){
-  // Standard 66
-  const sb = document.getElementById('standard-books');
-  if(sb) sb.innerHTML = standardBooks.map(b =>
-    `<div class="book-card" onclick="openReader('${b.api}','${b.name}')">
-       <div class="book-icon">${b.icon}</div>
-       <div class="book-info"><div class="book-name">${b.name}</div></div>
-     </div>`).join('');
+const bookChapters = {
+  'genesis':50,'exodus':40,'leviticus':27,'numbers':36,'deuteronomy':34,
+  'joshua':24,'judges':21,'ruth':4,'1 samuel':31,'2 samuel':24,
+  '1 kings':22,'2 kings':25,'1 chronicles':29,'2 chronicles':36,
+  'ezra':10,'nehemiah':13,'esther':10,'job':42,'psalm':150,
+  'proverbs':31,'ecclesiastes':12,'song of solomon':8,'isaiah':66,
+  'jeremiah':52,'lamentations':5,'ezekiel':48,'daniel':12,'hosea':14,
+  'joel':3,'amos':9,'obadiah':1,'jonah':4,'micah':7,'nahum':3,
+  'habakkuk':3,'zephaniah':3,'haggai':2,'zechariah':14,'malachi':4,
+  'matthew':28,'mark':16,'luke':24,'john':21,'acts':28,'romans':16,
+  '1 corinthians':16,'2 corinthians':13,'galatians':6,'ephesians':6,
+  'philippians':4,'colossians':4,'1 thessalonians':5,'2 thessalonians':3,
+  '1 timothy':6,'2 timothy':4,'titus':3,'philemon':1,'hebrews':13,
+  'james':5,'1 peter':5,'2 peter':3,'1 john':5,'2 john':1,
+  '3 john':1,'jude':1,'revelation':22,
+  'tobit':14,'judith':16,'1 maccabees':16,'2 maccabees':15,
+  'wisdom':19,'sirach':51,'baruch':6
+};
 
-  // African Roots 81
-  const ab = document.getElementById('african-content');
-  if(ab){
-    let html = `<div style="background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;">
-      <div style="font-family:Cinzel,serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">ALL 81 BOOKS UNLOCKED</div>
-      <div style="font-family:Cormorant Garamond,serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">The complete Ethiopian Orthodox Canon — 66 standard books + 7 Deuterocanon + 8 exclusive to Ethiopia.</div>
-    </div>`;
-    html += sectionHead('📚','THE 66-BOOK STANDARD CANON','Preserved in Ethiopia for 1,600 years.');
-    html += '<div class="book-grid">'+africanBooks.slice(0,66).map(b=>bookCard(b,'openReader')).join('')+'</div>';
-    html += sectionHead('📖','THE DEUTEROCANON — 7 BOOKS','Removed from Protestant Bibles in 1827. Still sacred to Ethiopia, Catholics, and Eastern Orthodox.');
-    html += '<div class="book-grid">'+africanBooks.slice(66,73).map(b=>`
-      <div class="book-card" onclick="openReader('${b.api}','${b.name}')">
-        <div class="book-icon">${b.icon}</div>
-        <div class="book-info"><div class="book-name">${b.name}</div><div class="book-tag gold">Deuterocanon</div></div>
-      </div>`).join('')+'</div>';
-    html += sectionHead('🌟','EXCLUSIVELY ETHIOPIAN — 8 BOOKS','Found in NO other Bible on earth.');
-    html += `<div class="exclusive-wrapper"><div class="exclusive-badge">✦ PRO EXCLUSIVE ✦</div><div class="book-grid">`+
-      africanBooks.slice(73).map(b => b.special
-        ? `<div class="book-card" onclick="openSpecial('${b.special}','${b.name}')"><div class="book-icon">${b.icon}</div><div class="book-info"><div class="book-name">${b.name}</div></div></div>`
-        : bookCard(b,'openReader')
-      ).join('')+'</div></div>';
-    ab.innerHTML = html;
+/* ══════════════════════════════════════════════
+   BUILD BOOKS — uses DOM fragments to avoid innerHTML truncation
+══════════════════════════════════════════════ */
+function makeBookCard(icon, name, onclick){
+  const div = document.createElement('div');
+  div.className = 'book-card';
+  div.onclick = onclick;
+  div.innerHTML = `<div class="book-icon">${icon}</div><div class="book-info"><div class="book-name">${name}</div></div>`;
+  return div;
+}
+
+function makeScrollCard(icon, name, meta, onclick){
+  const div = document.createElement('div');
+  div.className = 'scroll-card';
+  div.onclick = onclick;
+  div.innerHTML = `<div class="scroll-icon">${icon}</div><div class="book-info"><div class="scroll-name">${name}</div><div class="scroll-meta">${meta}</div></div>`;
+  return div;
+}
+
+function appendSectionHead(parent, icon, name, sub, extraStyle){
+  const div = document.createElement('div');
+  div.className = 'section-header';
+  if(extraStyle) div.style.cssText = extraStyle;
+  div.innerHTML = `<div class="section-title-row"><span class="section-icon">${icon}</span><span class="section-name">${name}</span></div><div class="section-sub">${sub}</div>`;
+  parent.appendChild(div);
+}
+
+function buildBooks(){
+  // ── Standard 66 ──
+  const sb = document.getElementById('standard-books');
+  if(sb){
+    sb.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    standardBooks.forEach(b => {
+      frag.appendChild(makeBookCard(b.icon, b.name, () => openReader(b.api, b.name)));
+    });
+    sb.appendChild(frag);
   }
 
-  // Hidden Scrolls 18
+  // ── African Roots 81 ──
+  const ab = document.getElementById('african-content');
+  if(ab){
+    ab.innerHTML = '';
+
+    // Banner
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:var(--gold-pale);border:1px solid var(--cream-dark);border-radius:10px;padding:1rem;margin-bottom:1.2rem;';
+    banner.innerHTML = '<div style="font-family:Cinzel,serif;font-size:0.7rem;color:var(--brown-mid);letter-spacing:0.1em;margin-bottom:0.4rem;">ALL 81 BOOKS UNLOCKED</div><div style="font-family:Cormorant Garamond,serif;font-size:0.92rem;color:var(--brown);line-height:1.6;">The complete Ethiopian Orthodox Canon — 66 standard books + 7 Deuterocanon + 8 exclusive to Ethiopia.</div>';
+    ab.appendChild(banner);
+
+    // 66 standard
+    appendSectionHead(ab,'📚','THE 66-BOOK STANDARD CANON','Preserved in Ethiopia for 1,600 years.','margin-top:0;');
+    const grid66 = document.createElement('div'); grid66.className = 'book-grid';
+    africanBooks.slice(0,66).forEach(b => grid66.appendChild(makeBookCard(b.icon, b.name, () => openReader(b.api, b.name))));
+    ab.appendChild(grid66);
+
+    // 7 Deuterocanon
+    appendSectionHead(ab,'📖','THE DEUTEROCANON — 7 BOOKS','Removed from Protestant Bibles in 1827. Still sacred to Ethiopia, Catholics, and Eastern Orthodox.','margin-top:2rem;');
+    const grid7 = document.createElement('div'); grid7.className = 'book-grid';
+    africanBooks.slice(66,73).forEach(b => {
+      const card = makeBookCard(b.icon, b.name, () => openReader(b.api, b.name));
+      const tag = document.createElement('div'); tag.className = 'book-tag gold'; tag.textContent = 'Deuterocanon';
+      card.querySelector('.book-info').appendChild(tag);
+      grid7.appendChild(card);
+    });
+    ab.appendChild(grid7);
+
+    // 8 Ethiopian exclusive
+    appendSectionHead(ab,'🌟','EXCLUSIVELY ETHIOPIAN — 8 BOOKS','Found in NO other Bible on earth.','margin-top:2rem;');
+    const excWrap = document.createElement('div'); excWrap.className = 'exclusive-wrapper';
+    const excBadge = document.createElement('div'); excBadge.className = 'exclusive-badge'; excBadge.textContent = '✦ PRO EXCLUSIVE ✦';
+    excWrap.appendChild(excBadge);
+    const grid8 = document.createElement('div'); grid8.className = 'book-grid';
+    africanBooks.slice(73).forEach(b => {
+      if(b.special){
+        grid8.appendChild(makeBookCard(b.icon, b.name, () => openSpecial(b.special, b.name)));
+      } else {
+        grid8.appendChild(makeBookCard(b.icon, b.name, () => openReader(b.api, b.name)));
+      }
+    });
+    excWrap.appendChild(grid8);
+    ab.appendChild(excWrap);
+  }
+
   buildScrolls();
-}
-
-function sectionHead(icon, name, sub){
-  return `<div class="section-header" style="margin-top:2rem;">
-    <div class="section-title-row"><span class="section-icon">${icon}</span><span class="section-name">${name}</span></div>
-    <div class="section-sub">${sub}</div>
-  </div>`;
-}
-
-function bookCard(b, fn){
-  return `<div class="book-card" onclick="${fn}('${b.api}','${b.name}')">
-    <div class="book-icon">${b.icon}</div>
-    <div class="book-info"><div class="book-name">${b.name}</div></div>
-  </div>`;
 }
 
 function buildScrolls(){
   const scr = document.getElementById('scroll-books');
   if(!scr) return;
-  const intro = `<div class="scrolls-intro">
-    <div class="scrolls-intro-badge">✦ 18 BOOKS UNLOCKED · PRO EXCLUSIVE ✦</div>
-    <div class="scrolls-intro-text">These texts were read by the earliest Christians, quoted by Church Fathers, and found alongside Scripture in ancient manuscripts — then quietly removed from the Western canon. Tap any scroll to begin reading.</div>
-  </div>`;
-  const cards = scrollBooks.map(b =>
-    `<div class="scroll-card" onclick="openSpecial('${b.special}','${b.name}')">
-       <div class="scroll-icon">${b.icon}</div>
-       <div class="book-info">
-         <div class="scroll-name">${b.name}</div>
-         <div class="scroll-meta">${b.meta}</div>
-       </div>
-     </div>`).join('');
-  scr.innerHTML = intro + `<div class="scrolls-grid">${cards}</div>`;
+  scr.innerHTML = '';
+
+  const intro = document.createElement('div');
+  intro.className = 'scrolls-intro';
+  intro.innerHTML = '<div class="scrolls-intro-badge">✦ 18 BOOKS UNLOCKED · PRO EXCLUSIVE ✦</div><div class="scrolls-intro-text">These texts were read by the earliest Christians, quoted by Church Fathers, and found alongside Scripture in ancient manuscripts — then quietly removed from the Western canon. Tap any scroll to begin reading.</div>';
+  scr.appendChild(intro);
+
+  const grid = document.createElement('div');
+  grid.className = 'scrolls-grid';
+  scrollBooks.forEach(b => {
+    grid.appendChild(makeScrollCard(b.icon, b.name, b.meta, () => openSpecial(b.special, b.name)));
+  });
+  scr.appendChild(grid);
 }
 
 /* ══════════════════════════════════════════════
-   READER — Bible API (with translation)
+   READER — Bible API (with translation + chapter nav)
 ══════════════════════════════════════════════ */
+// Parse "genesis 1" → { book: 'genesis', chapter: 1 }
+function parseRef(ref){
+  const parts = ref.trim().split(/\s+/);
+  const ch = parseInt(parts[parts.length-1]);
+  if(!isNaN(ch)){
+    const book = parts.slice(0,-1).join(' ').toLowerCase();
+    return { book, chapter: ch };
+  }
+  return { book: ref.toLowerCase(), chapter: 1 };
+}
+
+function buildRef(book, chapter){ return `${book} ${chapter}`; }
+
+function getMaxChapter(book){
+  return bookChapters[book.toLowerCase()] || 1;
+}
+
 async function openReader(ref, title){
   stopAudio();
-  currentRef = ref;
+  // Normalise: strip chapter from title (we'll show it dynamically)
+  const parsed = parseRef(ref);
+  currentRef = buildRef(parsed.book, parsed.chapter);
   currentTitle = title;
+  currentBook = parsed.book;
+  currentChapter = parsed.chapter;
   isBibleBook = true;
+
   document.getElementById('reader-title').textContent = title + ' · Loading…';
   document.getElementById('reader-controls').style.display = 'flex';
   const body = document.getElementById('reader-body');
   body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);font-style:italic;">Loading scripture…</p>';
   document.getElementById('reader').classList.add('open');
-  await loadBibleText(ref);
+  await loadBibleText();
 }
 
-async function loadBibleText(ref){
+async function loadBibleText(){
   const translation = document.getElementById('translation-select').value;
   const body = document.getElementById('reader-body');
+  const ref = buildRef(currentBook, currentChapter);
+  const maxCh = getMaxChapter(currentBook);
+
   try{
     const url = `https://bible-api.com/${encodeURIComponent(ref)}?translation=${translation}`;
     const res = await fetch(url);
     const data = await res.json();
     if(data.verses && data.verses.length){
-      document.getElementById('reader-title').textContent = data.reference || currentTitle;
+      document.getElementById('reader-title').textContent = `${currentTitle} · Chapter ${currentChapter}`;
       allVerseTexts = data.verses.map(v => v.text.trim());
-      body.innerHTML = data.verses.map((v,i) =>
-        `<div class="verse-block" id="vb-${i}" onclick="speakFromVerse(${i})">
-           <span class="verse-num">${v.verse}</span>
-           <span class="verse-text">${v.text.trim()}</span>
-         </div>`).join('');
+
+      // Build chapter nav + verses using DOM (no innerHTML truncation risk)
+      body.innerHTML = '';
+
+      // Chapter navigation bar
+      const nav = document.createElement('div');
+      nav.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0 1rem;margin-bottom:0.5rem;border-bottom:1px solid var(--cream-dark);';
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = '← Prev';
+      prevBtn.style.cssText = `font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.07em;color:var(--blue);background:var(--blue-light);border:1px solid rgba(58,123,213,0.3);border-radius:6px;padding:0.35rem 0.7rem;cursor:pointer;opacity:${currentChapter<=1?'0.35':'1'};`;
+      prevBtn.disabled = currentChapter <= 1;
+      prevBtn.onclick = () => { if(currentChapter>1){ currentChapter--; stopAudio(); loadBibleText(); body.scrollTop=0; }};
+
+      const chapLabel = document.createElement('div');
+      chapLabel.style.cssText = "font-family:'Cinzel',serif;font-size:0.7rem;color:var(--brown-soft);letter-spacing:0.1em;";
+      chapLabel.textContent = `CHAPTER ${currentChapter} OF ${maxCh}`;
+
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = 'Next →';
+      nextBtn.style.cssText = `font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.07em;color:var(--blue);background:var(--blue-light);border:1px solid rgba(58,123,213,0.3);border-radius:6px;padding:0.35rem 0.7rem;cursor:pointer;opacity:${currentChapter>=maxCh?'0.35':'1'};`;
+      nextBtn.disabled = currentChapter >= maxCh;
+      nextBtn.onclick = () => { if(currentChapter<maxCh){ currentChapter++; stopAudio(); loadBibleText(); body.scrollTop=0; }};
+
+      nav.appendChild(prevBtn);
+      nav.appendChild(chapLabel);
+      nav.appendChild(nextBtn);
+      body.appendChild(nav);
+
+      // Jump-to-chapter select
+      if(maxCh > 1){
+        const jumpRow = document.createElement('div');
+        jumpRow.style.cssText = 'text-align:center;margin-bottom:1rem;';
+        const jumpSel = document.createElement('select');
+        jumpSel.style.cssText = "font-family:'Cinzel',serif;font-size:0.6rem;color:var(--blue);background:var(--blue-light);border:1px solid rgba(58,123,213,0.3);border-radius:6px;padding:0.3rem 0.5rem;cursor:pointer;";
+        for(let i=1;i<=maxCh;i++){
+          const opt = document.createElement('option');
+          opt.value = i; opt.textContent = `Go to Chapter ${i}`;
+          if(i===currentChapter) opt.selected = true;
+          jumpSel.appendChild(opt);
+        }
+        jumpSel.onchange = () => { currentChapter=parseInt(jumpSel.value); stopAudio(); loadBibleText(); body.scrollTop=0; };
+        jumpRow.appendChild(jumpSel);
+        body.appendChild(jumpRow);
+      }
+
+      // Verses
+      const frag = document.createDocumentFragment();
+      data.verses.forEach((v,i) => {
+        const block = document.createElement('div');
+        block.className = 'verse-block';
+        block.id = 'vb-'+i;
+        block.onclick = () => speakFromVerse(i);
+        block.innerHTML = `<span class="verse-num">${v.verse}</span><span class="verse-text">${v.text.trim()}</span>`;
+        frag.appendChild(block);
+      });
+      body.appendChild(frag);
+
       updateAudioInfo();
     } else {
       body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);">Scripture not available in this translation. Try another.</p>';
@@ -608,11 +742,11 @@ async function loadBibleText(ref){
 }
 
 async function changeTranslation(){
-  if(!isBibleBook || !currentRef) return;
+  if(!isBibleBook || !currentBook) return;
   stopAudio();
   const body = document.getElementById('reader-body');
   body.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--brown-soft);font-style:italic;">Switching translation…</p>';
-  await loadBibleText(currentRef);
+  await loadBibleText();
 }
 
 /* ══════════════════════════════════════════════
